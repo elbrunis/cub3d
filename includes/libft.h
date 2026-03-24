@@ -4,5 +4,6 @@
 #include <stdlib.h>
 
 size_t	ft_strlen(const char *str);
+void	ft_bzero(void *s, size_t n);
 
 #endif

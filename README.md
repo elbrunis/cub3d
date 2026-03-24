@@ -1,5 +1,12 @@
 ## tareas a empezar
 
+-[]ponte con lo de mover el jugador es decir las funciones de key_hook dale un repaso de lo q habia q hacer en el gemini en el chat preguntale volvamos a lo de el mapa en 2d ponme los pasos etc y empiezas con eso, ten cuidado con los errores tonteria por q te has tirado mas de 1h con un error que resultaba ser una tonteria
+
+
+
+-[] mirar a ver si con un hilo puedo gestionar bien el tema de terminar el jeugo de golpe sabes para q no tenga q ver el if osea q constantemente este verificando si termino el juego
+
+
 
  - [] renderizar un mapa basico sin texturas ni movimientos ni verificacion de si es correcto
     - [] mirar el video para entender cada parte y ayudarme con chatgpt para entenderlo(te recomiendo hacerlo con un nuevo chat, pasandole el      enlace)

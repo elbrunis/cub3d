@@ -1,9 +1,9 @@
 #include "../../includes/cube3d.h"
 
-t_cube3d *init_basic(void)
+// FUNCION TEMPORAL
+static void map_temporal(t_cube3d *game)
 {
-	// TEMPORAL
-static char *map2d[] = {
+    static char *map2d[] = {
     "1111111111111111111111111",
     "1000000000110000000000001",
     "1011111100110011111111001",
@@ -17,13 +17,38 @@ static char *map2d[] = {
     "1000110000001100000000001",
     "1111111111111111111111111",
     NULL
+    
 };
+    game->map->map = map2d; // TEMPORAL
+}
 
-	// TEMPORAL
-	t_cube3d *game = (t_cube3d *)malloc(sizeof(t_cube3d));
-	game->map = (t_map *)malloc(sizeof(t_map));
-	game->map->map = map2d; // TEMPORAL
-	game->map->rows = 0;
-	game->map->cols = 0;
-	return (game);
+
+
+
+t_cube3d *init_basic(void)
+{
+    t_cube3d *game = (t_cube3d *)malloc(sizeof(t_cube3d));
+    game->map = (t_map *)malloc(sizeof(t_map));
+    game->player = (t_player *)malloc(sizeof(t_player));
+    game->frame = (t_img *)malloc(sizeof(t_img));
+    game->close_game = false;
+
+    //temporal
+    game->player->x_pos = 2.5;
+    game->player->y_pos = 2.5;
+    game->player->w = false;
+    game->player->s = false;
+    game->player->d = false;
+    game->player->a = false;
+    //temporal
+
+    init_window(game);
+    map_temporal(game);// temporal
+    game->map->rows = 0;
+    game->map->cols = 0;
+
+    game->frame->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+    game->frame->addr =mlx_get_data_addr(game->frame->img, &game->frame->bits_per_pixel, 
+                                   &game->frame->line_length, &game->frame->endian);
+    return (game);
 }

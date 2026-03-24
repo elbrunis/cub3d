@@ -1,5 +1,28 @@
 #include "../../includes/cube3d.h"
 
+static void	draw_player(t_cube3d *game, double col, double row, int color)
+{
+	int y;
+	int x;
+	int col_start;
+	int row_start;
+
+
+	col_start = (col * SQUARE_LEN);
+	row_start = (row * SQUARE_LEN);
+	y = 0;
+	while (y < PLAYER_LEN) // el -1 es para la linea del cuadrado
+	{
+		x = 0;
+		while (x < PLAYER_LEN)
+		{
+			my_mlx_pixel_put(game, col_start + x, row_start + y, color);
+			x++;
+		}
+		y++;
+	}
+}
+
 /*
 	Esta funcion hay q modificarla, ponieddole parametros
 	que reciba el mapa y la longitud maxima permitida de la ventana
@@ -29,12 +52,12 @@ static void	print_cube(t_cube3d *game, int row, int col, int color)
 
 	x = 0;
 	y = 0;
-	while (y < SQUARE_LEN - 1)
+	while (y < SQUARE_LEN - 1) // el -1 es para la linea del cuadrado
 	{
 		x = 0;
 		while (x < SQUARE_LEN - 1)
 		{
-			mlx_pixel_put(game->mlx, game->win, (col * SQUARE_LEN) + x, (row * SQUARE_LEN) + y, color);
+			my_mlx_pixel_put(game, (col * SQUARE_LEN) + x, (row * SQUARE_LEN) + y, color);
 			x++;
 		}
 		y++;
@@ -47,8 +70,6 @@ bool	map2d(t_cube3d *game)
 	int	x;
 
 	y = 0;
-	printf("hola");
-	mlx_pixel_put(game->mlx, game->win, 50, 50, 0xFF0000);
 	get_map2d_len(game->map);
 	while (y < game->map->rows)
 	{
@@ -56,12 +77,14 @@ bool	map2d(t_cube3d *game)
 		while (x < game->map->cols)
 		{
 			if (game->map->map[y][x] == '1')
-				print_cube(game, y, x, 0x808080);
+				print_cube(game, y, x, GRAY);
 			else
-				print_cube(game, y, x, 0xFFFFFF);
+				print_cube(game, y, x, WHITE);
 			x++;
 		}
 		y++;
 	}
+	draw_player(game, game->player->x_pos, game->player->y_pos, ORANGE);
+	mlx_put_image_to_window(game->mlx, game->win, game->frame->img, 0, 0);
 	return (true);
 }
