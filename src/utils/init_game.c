@@ -34,8 +34,13 @@ t_cube3d *init_basic(void)
     game->close_game = false;
 
     //temporal
-    game->player->x_pos = 2.5;
-    game->player->y_pos = 2.5;
+    game->player->x_pos = 5.0;
+    game->player->y_pos = 5.0;
+
+    game->player->angle = 0.0;
+
+    game->player->dir_x = cos(game->player->angle); // Esto dará 1.0
+    game->player->dir_y = sin(game->player->angle); // Esto dará 0.0    
     game->player->w = false;
     game->player->s = false;
     game->player->d = false;

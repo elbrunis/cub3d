@@ -9,6 +9,7 @@ static int	game_loop(void *data)
 		free_game(game);
 		exit(0);
 	}
+	move(game);
 	map2d(game);
 	return (0);
 }

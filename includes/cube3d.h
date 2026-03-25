@@ -6,7 +6,9 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
+#define M_PI 3.14159265358979323846
 // temporal security
 #define WIDTH 780
 #define HEIGHT 380
@@ -22,7 +24,8 @@
 # define K_S 115
 # define K_D 100
 
-#define SPEED 0.05
+#define SPEED 0.005
+#define MOVE_ANGLE 0.005
 
 
 typedef struct	s_img
@@ -38,6 +41,9 @@ typedef struct	s_player
 {
 	double	x_pos;
 	double	y_pos;
+	double	dir_x;
+	double	dir_y;
+	double	angle;
 	bool w,s,d,a;
 }				t_player;
 
@@ -74,5 +80,8 @@ bool		map2d(t_cube3d *game);
 //key_hooks
 int		press_key(int keycode, void *data);
 int		relase_key(int keycode, void *data);
+//move
+void	move(t_cube3d *game);
+
 
 #endif
