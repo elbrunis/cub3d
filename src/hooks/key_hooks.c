@@ -22,7 +22,7 @@ int	press_key(int keycode, void *data)
 /*
 	Eventos cuando se SUELTA la tecla
 */
-int	relase_key(int keycode, void *data)
+int	release_key(int keycode, void *data)
 {
 	t_player *player = (t_player *)data;
 

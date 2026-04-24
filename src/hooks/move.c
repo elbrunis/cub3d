@@ -17,6 +17,8 @@ static void	move_right(t_player *player)
 
 	player->dir_x = cos(player->angle);
 	player->dir_y = sin(player->angle);
+	player->plane_x = -0.66 * sin(player->angle);
+	player->plane_y = 0.66 * cos(player->angle);
 }
 
 static void	move_left(t_player *player)
@@ -27,6 +29,8 @@ static void	move_left(t_player *player)
 
 	player->dir_x = cos(player->angle);
 	player->dir_y = sin(player->angle);
+	player->plane_x = -0.66 * sin(player->angle);
+	player->plane_y = 0.66 * cos(player->angle);
 }
 
 //falta el de pa mover para atras

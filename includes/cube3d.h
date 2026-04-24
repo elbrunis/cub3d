@@ -12,6 +12,8 @@
 // temporal security
 #define WIDTH 780
 #define HEIGHT 380
+#define SCREEN_WIDTH 640
+#define SCREEN_HEIGHT 480
 
 #define PLAYER_LEN 10
 #define SQUARE_LEN 30
@@ -44,6 +46,8 @@ typedef struct	s_player
 	double	dir_x;
 	double	dir_y;
 	double	angle;
+	double	plane_x;
+	double	plane_y;
 	bool w,s,d,a;
 }				t_player;
 
@@ -76,12 +80,17 @@ int			x_pres(void *data);
 void		my_mlx_pixel_put(t_cube3d *game, int x, int y, int color);
 //map2d
 bool		map2d(t_cube3d *game);
+void	draw_player(t_cube3d *game, double col, double row, int color);
+
 //HOOKS
 //key_hooks
 int		press_key(int keycode, void *data);
-int		relase_key(int keycode, void *data);
+int		release_key(int keycode, void *data);
 //move
 void	move(t_cube3d *game);
+
+//RAYCASTING
+void	raycasting(t_cube3d *game);
 
 
 #endif

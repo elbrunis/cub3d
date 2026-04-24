@@ -1,6 +1,22 @@
 #include "../../includes/cube3d.h"
 
-static void	draw_player(t_cube3d *game, double col, double row, int color)
+static void draw_flecha(t_cube3d *game, int col_start, int row_start, int color)
+{
+	int	x;
+	int x_pixel;
+	int y_pixel;
+
+	x = 0;
+	while (x < 50)
+	{
+		x_pixel = (int)(col_start + (game->player->dir_x * x));
+		y_pixel = (int)(row_start + (game->player->dir_y * x));
+		my_mlx_pixel_put(game, x_pixel, y_pixel, color);
+		x++;
+	}
+}
+
+void	draw_player(t_cube3d *game, double col, double row, int color)
 {
 	int y;
 	int x;
@@ -8,8 +24,8 @@ static void	draw_player(t_cube3d *game, double col, double row, int color)
 	int row_start;
 
 
-	col_start = (col * SQUARE_LEN);
-	row_start = (row * SQUARE_LEN);
+	col_start = (int)(col * SQUARE_LEN);
+	row_start = (int)(row * SQUARE_LEN);
 	y = 0;
 	while (y < PLAYER_LEN) // el -1 es para la linea del cuadrado
 	{
@@ -21,6 +37,7 @@ static void	draw_player(t_cube3d *game, double col, double row, int color)
 		}
 		y++;
 	}
+	//draw_flecha(game, col_start + (PLAYER_LEN / 2), row_start + (PLAYER_LEN / 2), color);
 }
 
 /*
@@ -84,7 +101,5 @@ bool	map2d(t_cube3d *game)
 		}
 		y++;
 	}
-	draw_player(game, game->player->x_pos, game->player->y_pos, ORANGE);
-	mlx_put_image_to_window(game->mlx, game->win, game->frame->img, 0, 0);
 	return (true);
 }
