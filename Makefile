@@ -18,10 +18,10 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 fclean: clean
-	rm -fr $(OBJ_DIR)
+	rm -fr $(NAME)
 
 clean: 
-	rm -fr $(OBJ)
+	rm -fr $(OBJ_DIR)
 
 re: fclean all
 

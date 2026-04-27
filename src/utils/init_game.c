@@ -54,7 +54,7 @@ t_cube3d *init_basic(void)
     game->map->rows = 0;
     game->map->cols = 0;
 
-    game->frame->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+    game->frame->img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
     game->frame->addr =mlx_get_data_addr(game->frame->img, &game->frame->bits_per_pixel, 
                                    &game->frame->line_length, &game->frame->endian);
     return (game);

@@ -79,8 +79,9 @@ void		init_window(t_cube3d *game);
 int			x_pres(void *data);
 void		my_mlx_pixel_put(t_cube3d *game, int x, int y, int color);
 //map2d
-bool		map2d(t_cube3d *game);
-void	draw_player(t_cube3d *game, double col, double row, int color);
+//bool		map2d(t_cube3d *game);
+//void		draw_player(t_cube3d *game, double col, double row, int color);
+void		get_map2d_len(t_map *map); 
 
 //HOOKS
 //key_hooks

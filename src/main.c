@@ -1,6 +1,7 @@
 #include "../includes/cube3d.h"
 
 // bucle principal del juego
+
 static int	game_loop(void *data)
 {
 	t_cube3d *game = (t_cube3d *)data;
@@ -10,9 +11,10 @@ static int	game_loop(void *data)
 		exit(0);
 	}
 	move(game);
-	map2d(game);
+	//map2d(game);
+	get_map2d_len(game->map);
 	raycasting(game);
-	draw_player(game, game->player->x_pos, game->player->y_pos, ORANGE);
+	//draw_player(game, game->player->x_pos, game->player->y_pos, ORANGE);
 	mlx_put_image_to_window(game->mlx, game->win, game->frame->img, 0, 0);
 	return (0);
 }

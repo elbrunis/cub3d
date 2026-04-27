@@ -1,21 +1,5 @@
 #include "../../includes/cube3d.h"
-
-static void draw_flecha(t_cube3d *game, int col_start, int row_start, int color)
-{
-	int	x;
-	int x_pixel;
-	int y_pixel;
-
-	x = 0;
-	while (x < 50)
-	{
-		x_pixel = (int)(col_start + (game->player->dir_x * x));
-		y_pixel = (int)(row_start + (game->player->dir_y * x));
-		my_mlx_pixel_put(game, x_pixel, y_pixel, color);
-		x++;
-	}
-}
-
+/*
 void	draw_player(t_cube3d *game, double col, double row, int color)
 {
 	int y;
@@ -39,13 +23,15 @@ void	draw_player(t_cube3d *game, double col, double row, int color)
 	}
 	//draw_flecha(game, col_start + (PLAYER_LEN / 2), row_start + (PLAYER_LEN / 2), color);
 }
+*/
 
 /*
 	Esta funcion hay q modificarla, ponieddole parametros
 	que reciba el mapa y la longitud maxima permitida de la ventana
 	para  asi rechazar en caso de error
 */
-static void	get_map2d_len(t_map *map)
+
+void	get_map2d_len(t_map *map)
 {
 	int	temp;
 
@@ -61,6 +47,7 @@ static void	get_map2d_len(t_map *map)
 		}
 	}
 }
+/*
 // y = filas x = columnas
 static void	print_cube(t_cube3d *game, int row, int col, int color)
 {
@@ -103,3 +90,4 @@ bool	map2d(t_cube3d *game)
 	}
 	return (true);
 }
+*/

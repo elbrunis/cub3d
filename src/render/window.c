@@ -24,5 +24,5 @@ void	init_window(t_cube3d *game)
 {
 	game->mlx = mlx_init();
 	// el tamaño de la ventana es temporal
-	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "Ventana principal");
+	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Ventana principal");
 }

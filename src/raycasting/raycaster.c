@@ -1,5 +1,41 @@
 #include "../../includes/cube3d.h"
 
+
+void print_3d(t_cube3d *game, int column, double perpWallDist, int side, int color)
+{
+    int lineHeight = (int)(SCREEN_HEIGHT / perpWallDist);
+    int drawStart = (SCREEN_HEIGHT / 2) - (lineHeight / 2);
+    int drawEnd   = (SCREEN_HEIGHT / 2) + (lineHeight / 2);
+
+    if (drawStart < 0) drawStart = 0;
+    if (drawEnd >= SCREEN_HEIGHT) drawEnd = SCREEN_HEIGHT - 1;
+
+    if (side == 1)
+        color = color / 2;
+
+    // techo
+    int y = 0;
+    while (y < drawStart)
+    {
+        my_mlx_pixel_put(game, column, y, 0x333333);
+        y++;
+    }
+    // pared
+    while (y <= drawEnd)
+    {
+        my_mlx_pixel_put(game, column, y, color);
+        y++;
+    }
+    // suelo
+    while (y < SCREEN_HEIGHT)
+    {
+        my_mlx_pixel_put(game, column, y, 0x555555);
+        y++;
+    }
+}
+
+
+/*
 static void draw_line(t_cube3d *game, int x0, int y0, int x1, int y1, int color)
 {
     int dx = abs(x1 - x0);
@@ -17,7 +53,7 @@ static void draw_line(t_cube3d *game, int x0, int y0, int x1, int y1, int color)
         if (e2 > -dy) { err -= dy; x0 += sx; }
         if (e2 < dx)  { err += dx; y0 += sy; }
     }
-}
+}*/
 
 void	raycasting(t_cube3d *game)
 {
@@ -99,27 +135,29 @@ void	raycasting(t_cube3d *game)
     	// Si el rayo va a la derecha, el borde que toca es el izquierdo de mapX
    		// Si el rayo va a la izquierda, el borde que toca es el derecho de mapX (mapX + 1)
     	if (rayDirX > 0)
-        	wallHitX = mapX * SQUARE_LEN;
+        	wallHitX = (float)mapX;
     	else
-        	wallHitX = (mapX + 1) * SQUARE_LEN;
-    	wallHitY = (game->player->y_pos + perpWallDist * rayDirY) * SQUARE_LEN;
+        	wallHitX = (float)mapX + 1;
+    	wallHitY = game->player->y_pos + perpWallDist * rayDirY;
 	}
 	else
 	{
-	    wallHitX = (game->player->x_pos + perpWallDist * rayDirX) * SQUARE_LEN;
+	    wallHitX = game->player->x_pos + perpWallDist * rayDirX;
 	    // Si el rayo va hacia abajo, el borde que toca es el superior de mapY
 	    // Si el rayo va hacia arriba, el borde que toca es el inferior de mapY (mapY + 1)
 	    if (rayDirY > 0)
-	        wallHitY = mapY * SQUARE_LEN;
+	        wallHitY = (float)mapY;
 	    else
-	        wallHitY = (mapY + 1) * SQUARE_LEN;
+	        wallHitY = (float)mapY + 1;
 	}
 
-	int playerPixelX = (int)(game->player->x_pos * SQUARE_LEN);
-	int playerPixelY = (int)(game->player->y_pos * SQUARE_LEN);
+	int playerX = game->player->x_pos;
+	int playerY = game->player->y_pos;
 
-	if (x % 10 == 0)
-		draw_line(game, playerPixelX, playerPixelY, (int)wallHitX, (int)wallHitY, ORANGE);
+	print_3d(game, x, perpWallDist, side, 0xFFFFFF);
+
+	//if (x % 10 == 0)
+		//draw_line(game, playerPixelX, playerPixelY, (int)wallHitX, (int)wallHitY, ORANGE);
 		//
 		x++;
 	}
