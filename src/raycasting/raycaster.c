@@ -87,7 +87,7 @@ void	raycasting(t_cube3d *game)
 		if (rayDirX < 0)
 		{
 			stepX = -1;
-			sideDistX = (game->player->x_pos - mapX) * deltaDistX;
+			sideDistX = (game->player->x_pos - mapX) * deltaDistX; // aqui tengo q calcular el lado mas cercano ya que estamos en lo negativo nor lo q es como si fueramos hacia atras
 		}
 		else 
 		{

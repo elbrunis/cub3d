@@ -41,8 +41,8 @@ t_cube3d *init_basic(void)
 
     game->player->dir_x = cos(game->player->angle); // Esto dará 1.0
     game->player->dir_y = sin(game->player->angle); // Esto dará 0.0    
-    game->player->plane_x = 0.66; // FOV
-    game->player->plane_y = 0.00; // FOV
+    game->player->plane_x = -0.66 * sin(game->player->angle); // FOV
+    game->player->plane_y = 0.66 * cos(game->player->angle);// FOV
     game->player->w = false;
     game->player->s = false;
     game->player->d = false;

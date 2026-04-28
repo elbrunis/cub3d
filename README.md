@@ -1,5 +1,33 @@
 ## tareas a empezar
 
+- [] organizar bien el archivo de raycasting
+- [] estructurar como vamos a organizar el parseo ejemplo:      
+         1	check_extension	         Comprueba que el archivo acabe en .cub.
+         2	parse_identifiers	Guarda las rutas de XPM y los colores RGB.
+         3	parse_map	Lee el mapa en un char ** (array de strings).
+         4	validate_map	Comprueba muros, jugador único y caracteres válidos.
+   una vez esto pensar como vamos structurar toda la logica
+- [] hacer parseo
+- [] terminar la parte de las texturas
+- [] pulir norminette finish
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -[]ponte con lo de mover el jugador es decir las funciones de key_hook dale un repaso de lo q habia q hacer en el gemini en el chat preguntale volvamos a lo de el mapa en 2d ponme los pasos etc y empiezas con eso, ten cuidado con los errores tonteria por q te has tirado mas de 1h con un error que resultaba ser una tonteria
 
 
