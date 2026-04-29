@@ -29,6 +29,26 @@
 #define SPEED 0.005
 #define MOVE_ANGLE 0.005
 
+typedef struct	s_ray
+{
+	double	cameraX;
+	double	rayDirX;
+	double	rayDirY;
+	int		mapX;
+	int		mapY;
+	double	deltaDistX;
+	double	deltaDistY;
+	double	sideDistX;
+	double	sideDistY;
+	int		stepX;
+	int		stepY;
+	int		hit;
+	int		side;
+	double	perpWallDist;
+	int		lineHeight;
+	int		drawStart;
+	int		drawEnd;
+}				t_ray;
 
 typedef struct	s_img
 {

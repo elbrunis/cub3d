@@ -1,15 +1,13 @@
 #include "../../includes/cube3d.h"
 
-/*
-	Esta funcion de momrnto es pequeña pero se ampliara
-	en un futuro haciendo todas las comprobaciones etc
-	para calcular el verdadero tamaño
-*/
 void	my_mlx_pixel_put(t_cube3d *game, int x, int y, int color)
 {
-	char *dst;
+	char	*dst;
 
-	dst = game->frame->addr + (y * game->frame->line_length + x * (game->frame->bits_per_pixel / 8));
+	if (x < 0 || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_HEIGHT)
+		return ;
+	dst = game->frame->addr + (y * game->frame->line_length + x * \
+		(game->frame->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
 

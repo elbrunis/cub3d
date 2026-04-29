@@ -1,6 +1,6 @@
 ## tareas a empezar
 
-- [] organizar bien el archivo de raycasting
+- [] pasar a limpio el resto de el codigo
 - [] estructurar como vamos a organizar el parseo ejemplo:      
          1	check_extension	         Comprueba que el archivo acabe en .cub.
          2	parse_identifiers	Guarda las rutas de XPM y los colores RGB.
