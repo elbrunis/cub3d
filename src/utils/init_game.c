@@ -22,6 +22,20 @@ static void	map_temporal(t_cube3d *game)
 	game->map->map = map2d;
 }
 
+void	init_parser(t_parser *parser)
+{
+	if (!parser)
+		return;
+	parser->fd = 0;
+	parser->n_config = 0;
+	parser->no_path = NULL;
+	parser->so_path = NULL;
+	parser->we_path = NULL;
+	parser->ea_path = NULL;
+	parser->floor_color = 0;
+	parser->ceiling_color = 0;
+}
+
 static void	init_player_values(t_cube3d *game)
 {
 	game->player->x_pos = 5.0;
@@ -47,7 +61,9 @@ t_cube3d	*init_basic(void)
 	game->map = (t_map *)malloc(sizeof(t_map));
 	game->player = (t_player *)malloc(sizeof(t_player));
 	game->frame = (t_img *)malloc(sizeof(t_img));
-	if (!game->map || !game->player || !game->frame)
+    game->p = (t_parser *)malloc(sizeof(t_parser));
+	init_parser(game->p);
+	if (!game->map || !game->player || !game->frame || !game->p)
 		return (NULL);
 	game->close_game = false;
 	init_player_values(game);

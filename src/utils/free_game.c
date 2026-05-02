@@ -30,6 +30,11 @@ bool	free_game(t_cube3d  *game)
 		mlx_destroy_display(game->mlx);
 		game->mlx =  NULL;
 	}
+	if (game->p)
+	{
+		free(game->p);
+		game->p = NULL;
+	}
 	free(game);
 	return (true);
 }
