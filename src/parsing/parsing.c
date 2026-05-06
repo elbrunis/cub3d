@@ -17,41 +17,42 @@ static char	*get_extension_type(char *line)
 		return ("EA");
 	return (NULL);
 }
+static const char	*parse_line(t_cube3d *game, char *temp)
+{
+	char	*type;
 
+	type = get_extension_type(temp);
+	if (type)
+		return (get_extension(game, &temp, type));
+	else if (*temp == 'F' || *temp == 'C')
+		return (parse_colors(game, &temp, *temp));
+	else if (*temp != '\n' && *temp != '\0')
+		return ("There is an invalid character in the map file");
+	return (NULL);
+}
 
-const char	*reed_and_check_map(t_cube3d *game)
+static const char	*reed_and_check_map(t_cube3d *game)
 {
 	char		*line;
 	char		*temp;
 	const char	*error;
-	char		*type;
 
-	error = NULL;
-	line = get_next_line(game->p->fd);
-	while (line)
+	while (game->p->n_config < N_MAP_CONFIG)
 	{
+		line = get_next_line(game->p->fd);
+		if (!line)
+			break ;
 		temp = line;
 		while (*temp == ' ' || *temp == '\t')
 			temp++;
-		if (game->p->n_config < N_MAP_CONFIG && !error)
+		if (*temp && *temp != '\n')
 		{
-			type = get_extension_type(temp);
-			if (type)
-				error = get_extension(game, &temp, type);
-			else if (*temp == 'F')
-				error = parse_colors(game, &temp, 'F');
-			else if (*temp == 'C')
-				error = parse_colors(game, &temp, 'C');
-			else if (*temp != '\n' && *temp != '\0')
-				error = "There is an invalid character in the map file";
+			error = parse_line(game, temp);
+			if (error)
+				return (free(line), error);
 		}
 		free(line);
-		if (error)
-			return (error);
-		line = get_next_line(game->p->fd);
 	}
-	if (line)
-		free(line);
 	return (NULL);
 }
 
@@ -77,6 +78,14 @@ const char	*parser(t_cube3d *game, char *path)
 	if(error)
 		return(error);
 	error = reed_and_check_map(game);
+	if(error)
+	{
+		close(game->p->fd);
+		return(error);
+	}
+	if (game->p->n_config < N_MAP_CONFIG)
+		return("Missing configurations");
+	error = parse_map(game);
 	if(error)
 	{
 		close(game->p->fd);

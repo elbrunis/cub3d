@@ -23,14 +23,32 @@
 // 	return (0);
 // }
 
+void	debug_print_parser(t_cube3d *game)
+{
+	if (!game || !game->p)
+	{
+		printf("Error: Estructura de parseo no inicializada.\n");
+		return ;
+	}
+	printf("--- DEBUG PARSER ---\n");
+	printf("NO Path:  [%s]\n", game->p->no_path ? game->p->no_path : "NULL");
+	printf("SO Path:  [%s]\n", game->p->so_path ? game->p->so_path : "NULL");
+	printf("WE Path:  [%s]\n", game->p->we_path ? game->p->we_path : "NULL");
+	printf("EA Path:  [%s]\n", game->p->ea_path ? game->p->ea_path : "NULL");
+	printf("Floor:    Hex: 0x%06X | Dec: %u\n", game->p->floor_color, game->p->floor_color);
+	printf("Ceiling:  Hex: 0x%06X | Dec: %u\n", game->p->ceiling_color, game->p->ceiling_color);
+	printf("--------------------\n");
+}
+
 int	main(int argc, char **argv)
 {
 	if (argc != 2)
-		return(1);
+		return(printf("Error missing arguments\n"));
 	t_cube3d *game = init_basic();
 	const char *error = parser(game, argv[1]);
 	if (error)
 		return(printf("Error\n%s: %s\n", error, strerror(errno)));
+	debug_print_parser(game);
 	free_game(game); // CUIDADO CUANDO DESSCOMENTES LO DEMAS POR Q TIENES Q ELIMINAR ESTE FREE
 
 // 	//rellenar lo restante de estas funciones

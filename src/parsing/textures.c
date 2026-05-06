@@ -1,16 +1,22 @@
 #include "../includes/cube3d.h"
 
-static void	save_extension(t_cube3d *game, char *type, char *path)
+static char	*save_extension(t_cube3d *g, char *t, char *p)
 {
-	if (ft_strncmp(type, "NO", 2) == 0)
-		game->p->no_path = ft_strdup(path);
-	else if (ft_strncmp(type, "SO", 2) == 0)
-		game->p->so_path = ft_strdup(path);
-	else if (ft_strncmp(type, "WE", 2) == 0)
-		game->p->we_path = ft_strdup(path);
-	else if (ft_strncmp(type, "EA", 2) == 0)
-		game->p->ea_path = ft_strdup(path);
-	game->p->n_config++;
+	char	**dst;
+
+	if (!ft_strncmp(t, "NO", 2))
+		dst = &g->p->no_path;
+	else if (!ft_strncmp(t, "SO", 2))
+		dst = &g->p->so_path;
+	else if (!ft_strncmp(t, "WE", 2))
+		dst = &g->p->we_path;
+	else
+		dst = &g->p->ea_path;
+	if (*dst)
+		return ("Duplicate configuration detected");
+	*dst = ft_strdup(p);
+	g->p->n_config++;
+	return (NULL);
 }
 
 static char	*check_line_format(char *line)
@@ -68,7 +74,9 @@ char	*get_extension(t_cube3d *game, char **line, char *type)
 		free_split(split);
 		return (error);
 	}
-	save_extension(game, type, split[0]);
+	error = save_extension(game, type, split[0]);
+	if (error)
+		return(error);
 	while (*(*line) && *(*line) != ' ' && *(*line) != '\t' && *(*line) != '\n')
 		(*line)++;
 	return (NULL);

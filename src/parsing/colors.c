@@ -1,12 +1,20 @@
 #include "../includes/cube3d.h"
 
-static void	rgb_to_int(t_cube3d *game, int *rgb, char type)
+static char	*rgb_to_int(t_cube3d *g, int *rgb, char t)
 {
-	if (type == 'F')
-		game->p->floor_color =  (unsigned int)((rgb[0] << 16) | (rgb[1] << 8) | rgb[2]);
-	if (type == 'C')
-		game->p->ceiling_color = (unsigned int)((rgb[0] << 16) | (rgb[1] << 8) | rgb[2]);
-	game->p->n_config++;
+	unsigned int	color;
+	unsigned int	*dst;
+
+	color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
+	if (t == 'F')
+		dst = &g->p->floor_color;
+	else
+		dst = &g->p->ceiling_color;
+	if (*dst != (unsigned int)-1)
+		return ("Duplicate configuration detected");
+	*dst = color;
+	g->p->n_config++;
+	return (NULL);
 }
 
 static int	get_color(char **line)
@@ -64,6 +72,5 @@ const char	*parse_colors(t_cube3d *game, char **line, char type)
 
 	if (**line != '\0' && **line != '\n')
 		return ("Invalid characters after color values");
-	rgb_to_int(game, rgb, type);
-	return (NULL);
+	return(rgb_to_int(game, rgb, type));
 }

@@ -35,15 +35,22 @@
 #define SPEED 0.005
 #define MOVE_ANGLE 0.005
 
+typedef struct s_list_map
+{
+	char				*line;
+	struct s_list_map	*next;
+}	t_list_map;
 
 typedef struct	s_parse
 {
 	int				fd;
 	int				n_config;
+	char			*map;
 	char			*no_path;
 	char			*so_path;
 	char			*we_path;
 	char			*ea_path;
+	bool			player_set;
 	unsigned int	floor_color;
     unsigned int	ceiling_color;
 }				t_parser;
@@ -113,6 +120,7 @@ typedef struct	s_cube3d
 t_cube3d	*init_basic(void);
 //free_game
 bool		free_game(t_cube3d  *game);
+void		free_map(char **map);
 //utils
 int			ft_splitlen(char **matrix);
 void		free_split(char **split);
@@ -142,6 +150,9 @@ const char	*parser(t_cube3d *game, char *path);
 char	*get_extension(t_cube3d *game, char **line, char *type);
 // colors
 const char	*parse_colors(t_cube3d *game, char **line, char type);
-
+//reed_map
+char	**read_map(t_cube3d *game);
+//parse map
+char	*parse_map(t_cube3d *game);
 
 #endif
