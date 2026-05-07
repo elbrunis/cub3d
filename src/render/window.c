@@ -18,9 +18,22 @@ int		x_pres(void *data)
 	return (0);
 }
 
-void	init_window(t_cube3d *game)
+
+char	*init_mlx_components(t_cube3d *game)
 {
 	game->mlx = mlx_init();
-	// el tamaño de la ventana es temporal
+	if (!game->mlx)
+		return ("mlx_init failed");
 	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Ventana principal");
+	if (!game->win)
+		return ("mlx_new_window failed");
+	game->frame->img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	if (!game->frame->img)
+		return ("mlx_new_image failed");
+	game->frame->addr = mlx_get_data_addr(game->frame->img,
+			&game->frame->bits_per_pixel, &game->frame->line_length,
+			&game->frame->endian);
+	if (!game->frame->addr)
+		return ("mlx_get_data_addr failed");
+	return (NULL);
 }

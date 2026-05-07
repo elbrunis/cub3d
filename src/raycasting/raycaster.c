@@ -96,7 +96,7 @@ void	perform_dda(t_cube3d *game, t_ray *r)
 			r->mapY += r->stepY;
 			r->side = 1;
 		}
-		if (game->map->map[r->mapY][r->mapX] == '1')
+		if (game->map[r->mapY][r->mapX] == '1')
 			r->hit = 1;
 	}
 	if (r->side == 0)

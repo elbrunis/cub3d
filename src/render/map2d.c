@@ -31,22 +31,22 @@ void	draw_player(t_cube3d *game, double col, double row, int color)
 	para  asi rechazar en caso de error
 */
 
-void	get_map2d_len(t_map *map)
-{
-	int	temp;
+// void	get_map2d_len(t_map *map)
+// {
+// 	int	temp;
 
-	temp = 0;
-	if (!map->rows && !map->cols)
-	{
-		while (map->map[map->rows])
-		{
-			temp = (int)ft_strlen(map->map[map->rows]);
-			if (map->cols < temp)
-				map->cols = temp;
-			map->rows++;
-		}
-	}
-}
+// 	temp = 0;
+// 	if (!map->rows && !map->cols)
+// 	{
+// 		while (map->map[map->rows])
+// 		{
+// 			temp = (int)ft_strlen(map->map[map->rows]);
+// 			if (map->cols < temp)
+// 				map->cols = temp;
+// 			map->rows++;
+// 		}
+// 	}
+// }
 /*
 // y = filas x = columnas
 static void	print_cube(t_cube3d *game, int row, int col, int color)

@@ -73,7 +73,7 @@ static char	**fill_array_and_free(t_list_map *lst, int size)
 /* falta por arreglar esta funcion para q coja y verifique si las
 ultimas lineas son validas osea pueden tener slatos de lineas
 pero no caracteres sueltos vacios*/
-char	**read_map(t_cube3d *game)
+char	**read_map(t_parse *parse)
 {
 	t_list_map	*lst;
 	t_list_map	*tmp;
@@ -82,13 +82,14 @@ char	**read_map(t_cube3d *game)
 
 	lst = NULL;
 	count = 0;
-	line = get_next_line(game->p->fd);
+	line = get_next_line(parse->fd);
 	while (line)
 	{
 		tmp = ft_lstnew_map(line);
 		ft_lstadd_back_map(&lst, tmp);
 		count++;
-		line = get_next_line(game->p->fd);
+		line = get_next_line(parse->fd);
 	}
 	return (fill_array_and_free(lst, count));
 }
+

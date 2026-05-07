@@ -39,21 +39,26 @@ typedef struct s_list_map
 {
 	char				*line;
 	struct s_list_map	*next;
-}	t_list_map;
-
+}				t_list_map;
+/* de esta estructura falta por integrar al juego
+   las variables q definen las texturas del juego
+   y el color de las paredes y el suelo*/
 typedef struct	s_parse
 {
 	int				fd;
 	int				n_config;
-	char			*map;
+	char			**map;
+	double			x_pos;
+	double			y_pos;
+	double			angle;
 	char			*no_path;
 	char			*so_path;
 	char			*we_path;
-	char			*ea_path;
-	bool			player_set;
+	char			*ea_path;  
+	bool			player_set; // verifica si el jugador tiene posicion de salida
 	unsigned int	floor_color;
     unsigned int	ceiling_color;
-}				t_parser;
+}				t_parse;
 
 typedef struct	s_ray
 {
@@ -97,19 +102,11 @@ typedef struct	s_player
 	bool w,s,d,a;
 }				t_player;
 
-typedef struct	s_map
-{
-	char	**map;
-	int		rows;
-	int		cols;
-}				t_map;
-
 typedef struct	s_cube3d
 {
 	void		*mlx;
 	void		*win;
-	t_parser	*p;
-	t_map		*map;
+	char		**map;
 	t_player	*player;
 	t_img		*frame;
 	bool		close_game;
@@ -117,7 +114,8 @@ typedef struct	s_cube3d
 
 //UTILS
 //init_game
-t_cube3d	*init_basic(void);
+t_cube3d	*init_game(t_parse *parse);
+t_parse	*init_parser(void); // esto igual habra q quitarlo
 //free_game
 bool		free_game(t_cube3d  *game);
 void		free_map(char **map);
@@ -126,14 +124,9 @@ int			ft_splitlen(char **matrix);
 void		free_split(char **split);
 //RENDER
 //window
-void		init_window(t_cube3d *game);
+char		*init_mlx_components(t_cube3d *game);
 int			x_pres(void *data);
 void		my_mlx_pixel_put(t_cube3d *game, int x, int y, int color);
-//map2d
-//bool		map2d(t_cube3d *game);
-//void		draw_player(t_cube3d *game, double col, double row, int color);
-void		get_map2d_len(t_map *map); 
-
 //HOOKS
 //key_hooks
 int		press_key(int keycode, void *data);
@@ -145,14 +138,14 @@ void	move(t_cube3d *game);
 void	raycasting(t_cube3d *game);
 // PARSING
 // parsing
-const char	*parser(t_cube3d *game, char *path);
+const char	*parser(t_parse *parse, char *path);
 // texture
-char	*get_extension(t_cube3d *game, char **line, char *type);
+char	*get_extension(t_parse *parse, char **line, char *type);
 // colors
-const char	*parse_colors(t_cube3d *game, char **line, char type);
+const char	*parse_colors(t_parse *parse, char **line, char type);
 //reed_map
-char	**read_map(t_cube3d *game);
+char	**read_map(t_parse *parse);
 //parse map
-char	*parse_map(t_cube3d *game);
+char	*parse_map(t_parse *parse);
 
 #endif

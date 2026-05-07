@@ -1,21 +1,21 @@
 #include "../includes/cube3d.h"
 
-static char	*save_extension(t_cube3d *g, char *t, char *p)
+static char	*save_extension(t_parse *parse, char *t, char *p)
 {
 	char	**dst;
 
 	if (!ft_strncmp(t, "NO", 2))
-		dst = &g->p->no_path;
+		dst = &parse->no_path;
 	else if (!ft_strncmp(t, "SO", 2))
-		dst = &g->p->so_path;
+		dst = &parse->so_path;
 	else if (!ft_strncmp(t, "WE", 2))
-		dst = &g->p->we_path;
+		dst = &parse->we_path;
 	else
-		dst = &g->p->ea_path;
+		dst = &parse->ea_path;
 	if (*dst)
 		return ("Duplicate configuration detected");
 	*dst = ft_strdup(p);
-	g->p->n_config++;
+	parse->n_config++;
 	return (NULL);
 }
 
@@ -56,12 +56,12 @@ static char	*check_texture(char **split)
 	return (NULL);
 }
 
-char	*get_extension(t_cube3d *game, char **line, char *type)
+char	*get_extension(t_parse *parse, char **line, char *type)
 {
 	char	**split;
 	char	*error;
 
-	(void)game;
+	(void)parse;
 	error = check_line_format((*line));
 	if (error)
 		return (error);
@@ -74,7 +74,7 @@ char	*get_extension(t_cube3d *game, char **line, char *type)
 		free_split(split);
 		return (error);
 	}
-	error = save_extension(game, type, split[0]);
+	error = save_extension(parse, type, split[0]);
 	if (error)
 		return(error);
 	while (*(*line) && *(*line) != ' ' && *(*line) != '\t' && *(*line) != '\n')

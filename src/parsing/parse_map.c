@@ -1,28 +1,28 @@
 #include "../includes/cube3d.h"
 
 
-static char	*handle_player(t_cube3d *game, char c, int y, int x)
+static char	*handle_player(t_parse *parse, char c, int y, int x)
 {
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 	{
-		if (game->p->player_set)
+		if (parse->player_set)
 			return ("There is more than one player on the map");
-		game->p->player_set = true;
-		game->player->x_pos = (double)x + 0.5;
-		game->player->y_pos = (double)y + 0.5;
+		parse->player_set = true;
+		parse->x_pos = (double)x + 0.5;
+		parse->y_pos = (double)y + 0.5;
 		if (c == 'N')
-			game->player->angle = (3 * M_PI) / 2;
+			parse->angle = (3 * M_PI) / 2;
 		else if (c == 'S')
-			game->player->angle = M_PI / 2;
+			parse->angle = M_PI / 2;
 		else if (c == 'E')
-			game->player->angle = 0;
+			parse->angle = 0;
 		else if (c == 'W')
-			game->player->angle = M_PI;
+			parse->angle = M_PI;
 	}
 	return (NULL);
 }
 
-static char	*check_position(t_cube3d *game, char **map, int y, int x)
+static char	*check_position(t_parse *parse, char **map, int y, int x)
 {
 	int	len;
 
@@ -38,11 +38,11 @@ static char	*check_position(t_cube3d *game, char **map, int y, int x)
 		|| map[y + 1][x] == '\0')
 		return ("Map open at the bottom");
 	if (map[y][x] != '0')
-		return (handle_player(game, map[y][x], y, x));
+		return (handle_player(parse, map[y][x], y, x));
 	return (NULL);
 }
 
-static char	*check_line(t_cube3d *game, char **map, int y)
+static char	*check_line(t_parse *parse, char **map, int y)
 {
 	int		x;
 	char	*error;
@@ -54,7 +54,7 @@ static char	*check_line(t_cube3d *game, char **map, int y)
 			return ("invalid char in de map");
 		if (map[y][x] == '0'|| ft_strchr("NSEW", map[y][x]))
 		{
-			error = check_position(game, map, y, x);
+			error = check_position(parse, map, y, x);
 			if (error)
 				return (error);
 		}
@@ -63,52 +63,53 @@ static char	*check_line(t_cube3d *game, char **map, int y)
 	return (NULL);
 }
 
-
-char	*parse_map(t_cube3d *game)
+static char	*check_empty_end(char **map, int y)
 {
-	char	**map;
-	char	*error;
-	int		y;
-	bool	start_map;
-	int		x;
+	int	x;
 
-	map = read_map(game);
-	if (!map || !map[0])
-		return ("Empty map");
-	y = 0;
-	start_map = false;
 	while (map[y])
 	{
-		if (map[y][0]  != '\0')
-		{
-			start_map = true;
-			error = check_line(game, map, y);
-			if (error)
-			{
-				free_map(map);
-				return (error);
-			}
-			y++;
-		}
-		else if (!start_map)
-			y++;
-		else
-			break;
-	}
-	x = 0;
-	while (map[y] != NULL)
-	{
 		x = 0;
-		while (map[y][x] != '\0')
+		while (map[y][x])
 		{
-			if (map[y][x] != ' ')
-				return ("invalid char");
+			if (map[y][x] != ' ' && map[y][x] != '\n')
+				return ("invalid char after map");
 			x++;
 		}
 		y++;
 	}
-	
-	if (!game->p->player_set)
-		return ("Missing player");
 	return (NULL);
 }
+
+char	*parse_map(t_parse *parse)
+{
+	char	**map;
+	char	*err;
+	int		y;
+
+	map = read_map(parse);
+	if (!map || !map[0])
+		return ("Empty map");
+	y = 0;
+	while (map[y] && map[y][0] == '\0')
+		y++;
+	while (map[y] && map[y][0] != '\0')
+	{
+		err = check_line(parse, map, y);
+		if (err)
+		{
+			free_map(map);
+			return (err);
+		}
+		y++;
+	}
+	err = check_empty_end(map, y);
+	if (err)
+		return (err);
+	if (!parse->player_set)
+		return ("Missing player");
+	parse->map = map;
+	return (NULL);
+}
+
+
