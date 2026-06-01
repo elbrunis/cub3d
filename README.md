@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by maxiwilliner.*
+*This project has been created as part of the 42 curriculum by biniesta and mwilline.*
 
 # cub3D
 
