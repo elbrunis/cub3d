@@ -24,7 +24,7 @@ char	*init_mlx_components(t_cube3d *game)
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		return ("mlx_init failed");
-	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Ventana principal");
+	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
 	if (!game->win)
 		return ("mlx_new_window failed");
 	game->frame->img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);

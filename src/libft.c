@@ -117,26 +117,6 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
-static int	count_splits(char const *s, char c)
-{
-	int	i;
-	int	result;
-
-	result = 0;
-	i = 0;
-	if (!s[i])
-		return (result);
-	if (s[i] != c)
-		result++;
-	while (s[i])
-	{
-		if (s[i + 1] && (s[i] == c) && (s[i + 1] != c))
-			result++;
-		i++;
-	}
-	return (result);
-}
-
 static int	is_space(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n'

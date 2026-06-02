@@ -1,6 +1,5 @@
 #include "../../includes/cube3d.h"
 
-
 t_parse	*init_parser(void)
 {
 	t_parse	*parser;
@@ -19,13 +18,12 @@ t_parse	*init_parser(void)
 	parser->we_path = NULL;
 	parser->ea_path = NULL;
 	parser->player_set = false;
-	parser->floor_color = -1;
-	parser->ceiling_color = -1;
+	parser->floor_color = (unsigned int)-1;
+	parser->ceiling_color = (unsigned int)-1;
 	return (parser);
 }
 
-// mover esta funcion una vez terminado todo el parseo
-static void init_player_values(t_cube3d *game, t_parse *parse)
+static void	init_player_values(t_cube3d *game, t_parse *parse)
 {
 	game->player->x_pos = parse->x_pos;
 	game->player->y_pos = parse->y_pos;
@@ -38,9 +36,36 @@ static void init_player_values(t_cube3d *game, t_parse *parse)
 	game->player->s = false;
 	game->player->d = false;
 	game->player->a = false;
+	game->player->left = false;
+	game->player->right = false;
 }
 
-static int allocate_game_components(t_cube3d *game)
+static int	load_texture(void *mlx, t_tex *tex, char *path)
+{
+	tex->img = mlx_xpm_file_to_image(mlx, path, &tex->width, &tex->height);
+	if (!tex->img)
+		return (0);
+	tex->addr = mlx_get_data_addr(tex->img, &tex->bits_per_pixel,
+			&tex->line_length, &tex->endian);
+	if (!tex->addr)
+		return (0);
+	return (1);
+}
+
+static int	load_all_textures(t_cube3d *game, t_parse *parse)
+{
+	if (!load_texture(game->mlx, &game->tex[0], parse->no_path))
+		return (0);
+	if (!load_texture(game->mlx, &game->tex[1], parse->so_path))
+		return (0);
+	if (!load_texture(game->mlx, &game->tex[2], parse->ea_path))
+		return (0);
+	if (!load_texture(game->mlx, &game->tex[3], parse->we_path))
+		return (0);
+	return (1);
+}
+
+static int	allocate_game_components(t_cube3d *game)
 {
 	game->player = (t_player *)malloc(sizeof(t_player));
 	game->frame = (t_img *)malloc(sizeof(t_img));
@@ -57,16 +82,24 @@ t_cube3d	*init_game(t_parse *parse)
 	game = (t_cube3d *)malloc(sizeof(t_cube3d));
 	if (!game)
 		return (NULL);
+	ft_memset(game, 0, sizeof(t_cube3d));
 	if (!allocate_game_components(game))
 	{
 		free(game);
 		return (NULL);
 	}
+	game->parse = parse;
 	error = init_mlx_components(game);
 	if (error)
 	{
 		printf("Error: %s\n", error);
-		// poner aqui funcion para liberar el juego bien
+		free_game(game);
+		return (NULL);
+	}
+	if (!load_all_textures(game, parse))
+	{
+		printf("Error: Failed to load textures\n");
+		free_game(game);
 		return (NULL);
 	}
 	init_player_values(game, parse);

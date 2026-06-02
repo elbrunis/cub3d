@@ -28,27 +28,12 @@ static char	*check_line_format(char *line)
 	return (NULL);
 }
 
-static int	valid_extension(char *str)
-{
-	int	len;
-
-	len = ft_strlen(str);
-	if (len < 5)
-		return (0);
-	return (str[len - 1] == 'm'
-		&& str[len - 2] == 'p'
-		&& str[len - 3] == 'x'
-		&& str[len - 4] == '.');
-}
-
 static char	*check_texture(char **split)
 {
 	int	fd;
 
 	if (ft_splitlen(split) > 1)
 		return ("There are invalid characters after the texture");
-	if (!valid_extension(split[0]))
-		return ("One of the texture extensions is invalid");
 	fd = open(split[0], O_RDONLY);
 	if (fd < 0)
 		return ("One of the textures could not be opened");

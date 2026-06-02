@@ -1,6 +1,5 @@
 #include "../includes/cube3d.h"
 
-
 static char	*handle_player(t_parse *parse, char c, int y, int x)
 {
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
@@ -22,23 +21,31 @@ static char	*handle_player(t_parse *parse, char c, int y, int x)
 	return (NULL);
 }
 
-static char	*check_position(t_parse *parse, char **map, int y, int x)
+static char	*check_cell(char **map, int y, int x)
 {
 	int	len;
+	int	up_len;
+	int	down_len;
 
 	len = (int)ft_strlen(map[y]);
-	if (y == 0 || map[y + 1] == NULL || x == 0 || x == len - 1)
-		return ("Map open at the edges");
-	if (map[y][x + 1] == ' ' || map[y][x - 1] == '\0')
-		return ("Map open at the sides");
-	if ((int)ft_strlen(map[y - 1]) <= x || map[y - 1][x] == ' '
-		|| map[y - 1][x] == '\0')
-		return ("Map open at the top");
-	if ((int)ft_strlen(map[y + 1]) <= x || map[y + 1][x] == ' '
-		|| map[y + 1][x] == '\0')
-		return ("Map open at the bottom");
-	if (map[y][x] != '0')
-		return (handle_player(parse, map[y][x], y, x));
+	if (x == 0 || x == len - 1 || y == 0 || map[y + 1] == NULL)
+		return ("Map is not closed");
+	if (map[y][x + 1] == ' ' || map[y][x + 1] == '\0')
+		return ("Map is not closed");
+	if (map[y][x - 1] == ' ')
+		return ("Map is not closed");
+	if (y > 0)
+	{
+		up_len = (int)ft_strlen(map[y - 1]);
+		if (x < up_len && map[y - 1][x] == ' ')
+			return ("Map is not closed");
+	}
+	if (map[y + 1])
+	{
+		down_len = (int)ft_strlen(map[y + 1]);
+		if (x < down_len && map[y + 1][x] == ' ')
+			return ("Map is not closed");
+	}
 	return (NULL);
 }
 
@@ -52,9 +59,12 @@ static char	*check_line(t_parse *parse, char **map, int y)
 	{
 		if (!ft_strchr("NSEW10 ", map[y][x]))
 			return ("invalid char in de map");
-		if (map[y][x] == '0'|| ft_strchr("NSEW", map[y][x]))
+		if (map[y][x] == '0' || ft_strchr("NSEW", map[y][x]))
 		{
-			error = check_position(parse, map, y, x);
+			error = check_cell(map, y, x);
+			if (error)
+				return (error);
+			error = handle_player(parse, map[y][x], y, x);
 			if (error)
 				return (error);
 		}
@@ -111,5 +121,4 @@ char	*parse_map(t_parse *parse)
 	parse->map = map;
 	return (NULL);
 }
-
 

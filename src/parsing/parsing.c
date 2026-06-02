@@ -31,7 +31,7 @@ static const char	*parse_line(t_parse *parse, char *temp)
 	return (NULL);
 }
 
-static const char	*reed_and_check_map(t_parse *parse)
+static const char	*read_and_check_map(t_parse *parse)
 {
 	char		*line;
 	char		*temp;
@@ -77,7 +77,7 @@ const char	*parser(t_parse *parse, char *path)
 	error = validate_file(parse, path);
 	if(error)
 		return(error);
-	error = reed_and_check_map(parse);
+	error = read_and_check_map(parse);
 	if(error)
 	{
 		close(parse->fd);

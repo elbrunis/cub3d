@@ -1,13 +1,12 @@
 F 164,169,20        
 C 153,204,255
 
+NO assets/textures/stone.xpm
+SO assets/textures/brick.xpm
+WE assets/textures/wood.xpm
+EA assets/textures/wet_sponge.xpm
 
-NO assets/textures/wet_sponge.xpm
-SO assets/textures/wet_sponge.xpm
-WE assets/textures/wet_sponge.xpm
-EA assets/textures/wet_sponge.xpm 
-
-111111111111111
+1111111111111 1
 111111000111111
 111110000011111
 1111000N0001111
@@ -20,12 +19,3 @@ EA assets/textures/wet_sponge.xpm
 111110000011111
 111111000111111
 111111111111111
-
-
-
-
-
-
-
-
-

@@ -1,38 +1,43 @@
-#include "../includes/cube3d.h"
+#include "../../includes/cube3d.h"
 
-/*
-	Eventos cuando se PULSA la tecla
-*/
 int	press_key(int keycode, void *data)
 {
-	t_player *player;
+	t_cube3d	*game;
 
-	player = (t_player *)data;
+	game = (t_cube3d *)data;
+	if (keycode == K_ESC)
+		game->close_game = true;
 	if (keycode == K_A)
-		player->a = true;
+		game->player->a = true;
 	if (keycode == K_S)
-		player->s = true;
+		game->player->s = true;
 	if (keycode == K_W)
-		player->w = true;
+		game->player->w = true;
 	if (keycode == K_D)
-		player->d = true;
+		game->player->d = true;
+	if (keycode == K_LEFT)
+		game->player->left = true;
+	if (keycode == K_RIGHT)
+		game->player->right = true;
 	return (0);
 }
 
-/*
-	Eventos cuando se SUELTA la tecla
-*/
 int	release_key(int keycode, void *data)
 {
-	t_player *player = (t_player *)data;
+	t_cube3d	*game;
 
+	game = (t_cube3d *)data;
 	if (keycode == K_A)
-		player->a = false;
+		game->player->a = false;
 	if (keycode == K_S)
-		player->s = false;
+		game->player->s = false;
 	if (keycode == K_W)
-		player->w = false;
+		game->player->w = false;
 	if (keycode == K_D)
-		player->d = false;
+		game->player->d = false;
+	if (keycode == K_LEFT)
+		game->player->left = false;
+	if (keycode == K_RIGHT)
+		game->player->right = false;
 	return (0);
 }
