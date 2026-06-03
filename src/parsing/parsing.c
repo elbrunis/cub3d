@@ -84,7 +84,10 @@ const char	*parser(t_parse *parse, char *path)
 		return(error);
 	}
 	if (parse->n_config < N_MAP_CONFIG)
-		return("Missing configurations");
+	{
+		close(parse->fd);
+		return ("Missing configurations");
+	}
 	error = parse_map(parse);
 	close(parse->fd);
 	if(error)

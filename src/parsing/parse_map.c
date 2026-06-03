@@ -58,7 +58,7 @@ static char	*check_line(t_parse *parse, char **map, int y)
 	while (map[y][x])
 	{
 		if (!ft_strchr("NSEW10 ", map[y][x]))
-			return ("invalid char in de map");
+			return ("invalid char in the map");
 		if (map[y][x] == '0' || ft_strchr("NSEW", map[y][x]))
 		{
 			error = check_cell(map, y, x);
@@ -115,9 +115,15 @@ char	*parse_map(t_parse *parse)
 	}
 	err = check_empty_end(map, y);
 	if (err)
+	{
+		free_map(map);
 		return (err);
+	}
 	if (!parse->player_set)
+	{
+		free_map(map);
 		return ("Missing player");
+	}
 	parse->map = map;
 	return (NULL);
 }

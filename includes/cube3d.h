@@ -20,9 +20,9 @@
 # define N_MAP_CONFIG 6
 
 # define K_W 119
-# define K_A 97
+# define K_A 100
 # define K_S 115
-# define K_D 100
+# define K_D 97
 # define K_ESC 65307
 # define K_LEFT 65361
 # define K_RIGHT 65363

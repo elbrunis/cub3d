@@ -23,8 +23,10 @@ int	main(int argc, char **argv)
 	const char	*error;
 
 	if (argc != 2)
-		return (printf("Error missing arguments\n"));
+		return (printf("Error\nmissing arguments\n"));
 	parse = init_parser();
+	if (!parse)
+		return (1);
 	error = parser(parse, argv[1]);
 	if (error)
 	{

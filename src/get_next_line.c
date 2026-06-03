@@ -4,7 +4,7 @@
 
 #define BUFFER_SIZE 42
 
-char	*free_and_join(char *save, char *read)
+static char	*free_and_join(char *save, char *read)
 {
 	char	*join;
 
@@ -13,7 +13,7 @@ char	*free_and_join(char *save, char *read)
 	return (join);
 }
 
-char	*create_line(char *save)
+static char	*create_line(char *save)
 {
 	char	*line;
 	size_t	i;
@@ -37,7 +37,7 @@ char	*create_line(char *save)
 	return (line);
 }
 
-char	*put_rest(char *save)
+static char	*put_rest(char *save)
 {
 	char	*rest;
 	size_t	i;
@@ -63,7 +63,7 @@ char	*put_rest(char *save)
 	return (rest);
 }
 
-char	*read_file(int fd, char *save)
+static char	*read_file(int fd, char *save)
 {
 	char	*new_read;
 	int		len;

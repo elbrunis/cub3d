@@ -52,12 +52,14 @@ static void	ft_lstadd_back_map(t_list_map **lst, t_list_map *new)
 
 static char	**fill_array_and_free(t_list_map *lst, int size)
 {
-	char	**map;
-	int		i;
+	char		**map;
+	t_list_map	*head;
+	int			i;
 
 	map = malloc(sizeof(char *) * (size + 1));
 	if (!map)
 		return (NULL);
+	head = lst;
 	i = 0;
 	while (lst)
 	{
@@ -66,7 +68,7 @@ static char	**fill_array_and_free(t_list_map *lst, int size)
 		i++;
 	}
 	map[i] = NULL;
-	free_map_list(lst);
+	free_map_list(head);
 	return (map);
 }
 

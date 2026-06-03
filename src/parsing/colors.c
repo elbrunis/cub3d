@@ -38,7 +38,7 @@ static int	get_color(char **line)
 		j++;
 	}
 	str[j] = '\0';
-	num = atoi(str);
+	num = ft_atoi(str);
 	if (num < 0 || num > 255) 
 		return (-1);
 	line[0] += i;

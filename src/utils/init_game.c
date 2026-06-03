@@ -92,13 +92,13 @@ t_cube3d	*init_game(t_parse *parse)
 	error = init_mlx_components(game);
 	if (error)
 	{
-		printf("Error: %s\n", error);
+		printf("Error\n%s\n", error);
 		free_game(game);
 		return (NULL);
 	}
 	if (!load_all_textures(game, parse))
 	{
-		printf("Error: Failed to load textures\n");
+		printf("Error\nFailed to load textures\n");
 		free_game(game);
 		return (NULL);
 	}

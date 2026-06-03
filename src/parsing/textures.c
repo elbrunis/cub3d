@@ -61,7 +61,10 @@ char	*get_extension(t_parse *parse, char **line, char *type)
 	}
 	error = save_extension(parse, type, split[0]);
 	if (error)
-		return(error);
+	{
+		free_split(split);
+		return (error);
+	}
 	while (*(*line) && *(*line) != ' ' && *(*line) != '\t' && *(*line) != '\n')
 		(*line)++;
 	return (NULL);

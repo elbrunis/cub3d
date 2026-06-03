@@ -168,11 +168,6 @@ static char	*get_word(const char *s, int start, int end)
 	word[i] = '\0';
 	return (word);
 }
-/*
-	hay q corregir esta funcion y pasarla a la norminette 
-	(si cambias a otro split verifica q tenga la gestion de caracteres especiales)
-	(' ', '\t', '\n', '\r', '\v', '\f'.)
-*/
 char	**ft_split(const char *s)
 {
 	char	**res;
