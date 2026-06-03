@@ -72,14 +72,49 @@ static char	**fill_array_and_free(t_list_map *lst, int size)
 	return (map);
 }
 
-/* falta por arreglar esta funcion para q coja y verifique si las
-ultimas lineas son validas osea pueden tener slatos de lineas
-pero no caracteres sueltos vacios*/
+static void	pad_map_rows(char **map)
+{
+	int		max_width;
+	int		current_len;
+	int		i;
+	int		j;
+	char	*padded;
+
+	max_width = 0;
+	i = -1;
+	while (map[++i])
+	{
+		current_len = (int)ft_strlen(map[i]);
+		if (current_len > max_width)
+			max_width = current_len;
+	}
+	i = -1;
+	while (map[++i])
+	{
+		current_len = (int)ft_strlen(map[i]);
+		if (current_len < max_width)
+		{
+			padded = malloc(max_width + 1);
+			if (!padded)
+				return ;
+			j = -1;
+			while (map[i][++j])
+				padded[j] = map[i][j];
+			while (j < max_width)
+				padded[j++] = ' ';
+			padded[j] = '\0';
+			free(map[i]);
+			map[i] = padded;
+		}
+	}
+}
+
 char	**read_map(t_parse *parse)
 {
 	t_list_map	*lst;
 	t_list_map	*tmp;
 	char		*line;
+	char		**map;
 	int			count;
 
 	lst = NULL;
@@ -92,6 +127,11 @@ char	**read_map(t_parse *parse)
 		count++;
 		line = get_next_line(parse->fd);
 	}
-	return (fill_array_and_free(lst, count));
+	if (!lst)
+		return (NULL);
+	map = fill_array_and_free(lst, count);
+	if (map)
+		pad_map_rows(map);
+	return (map);
 }
 

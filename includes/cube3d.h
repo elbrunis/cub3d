@@ -27,7 +27,7 @@
 # define K_LEFT 65361
 # define K_RIGHT 65363
 
-# define SPEED 0.005
+# define SPEED 0.05
 # define MOVE_ANGLE 0.005
 
 typedef struct s_list_map

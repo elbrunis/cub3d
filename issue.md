@@ -85,3 +85,15 @@
 | 🔵 Low | 4 | 4 | 0 |
 
 **All critical and medium issues resolved.** Only 2 high issues remain (libft folder structure, map-last enforcement).
+
+-----------infite loop-------------------------
+Build succeeds with zero warnings. Here's what was done:
+File modified: src/parsing/read_map.c
+New function added: pad_map_rows(char **map) (lines 75-110)
+How it works:
+1. First pass: iterates all rows to find max_width (the longest row)
+2. Second pass: any row shorter than max_width gets reallocated and padded with spaces (' ') to match max_width
+3. After padding, char **map is a perfect rectangle — every row has identical length
+Why this fixes the infinite loop:
+The DDA loop in raycaster.c:162-164 checks r->mapX >= row_len where row_len = ft_strlen(game->map[r->mapY]). Before this fix, stepping into a short row would give a small row_len, but stepping further could land on garbage memory beyond the string's null terminator. Now all rows are the same length, so the bounds check is consistent and the break fires reliably.
+The existing DDA bounds checks are preserved as a safety net — they still protect against any edge case where a ray escapes the map entirely.
