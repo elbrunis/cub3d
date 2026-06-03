@@ -27,7 +27,14 @@ int	main(int argc, char **argv)
 	parse = init_parser();
 	error = parser(parse, argv[1]);
 	if (error)
-		return (printf("Error\n%s: %s\n", error, strerror(errno)));
+	{
+		if (errno != 0)
+			printf("Error\n%s: %s\n", error, strerror(errno));
+		else
+			printf("Error\n%s\n", error);
+		free_parse(parse);
+		return (1);
+	}
 	game = init_game(parse);
 	if (!game)
 		return (1);

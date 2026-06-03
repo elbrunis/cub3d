@@ -43,7 +43,7 @@
 | 22 | **Unused defines** | `includes/cube3d.h` - `WIDTH`, `HEIGHT`, `PLAYER_LEN`, `SQUARE_LEN`, `GRAY`, `WHITE`, `ORANGE` | [x] DONE |
 | 23 | **Inconsistent naming** | `src/parsing/reed_map.c` - "reed" should be "read" | [x] DONE |
 | 24 | **Missing newline at end of Makefile** | `Makefile:30` | [x] DONE |
-| 25 | **Error message format** | `src/main.c` - Should be "Error\n" + message, currently "Error\n" + message + ": " + strerror | [ ] PENDING |
+| 25 | **Error message format** | `src/main.c` - Should be "Error\n" + message, currently "Error\n" + message + ": " + strerror | [x] DONE |
 
 ## Test Results Summary
 

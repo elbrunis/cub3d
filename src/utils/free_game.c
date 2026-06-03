@@ -15,7 +15,7 @@ void	free_map(char **map)
 	free(map);
 }
 
-static void	free_parse(t_parse *parse)
+void	free_parse(t_parse *parse)
 {
 	if (!parse)
 		return ;

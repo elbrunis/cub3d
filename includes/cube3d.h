@@ -132,6 +132,7 @@ t_parse		*init_parser(void);
 /* free_game */
 bool		free_game(t_cube3d *game);
 void		free_map(char **map);
+void		free_parse(t_parse *parse);
 /* utils */
 int			ft_splitlen(char **matrix);
 void		free_split(char **split);
