@@ -5,7 +5,7 @@ SRC = $(wildcard $(SRC_DIR)/*.c $(SRC_DIR)/*/*.c)
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -Iminilibx-linux
+CFLAGS = -Wall -Werror -Wextra -g -Iminilibx-linux
 
 all: $(NAME)
 

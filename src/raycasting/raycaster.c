@@ -18,6 +18,9 @@ static void	draw_textured_line(t_cube3d *game, int x, t_ray *r)
 	int		tex_y;
 	int		color;
 
+	// cambio
+	if (r->perpWallDist < 0.0001)
+        r->perpWallDist = 0.0001;
 	r->lineHeight = (int)(SCREEN_HEIGHT / r->perpWallDist);
 	r->drawStart = (SCREEN_HEIGHT / 2) - (r->lineHeight / 2);
 	r->drawEnd = (SCREEN_HEIGHT / 2) + (r->lineHeight / 2);
@@ -43,6 +46,17 @@ static void	draw_textured_line(t_cube3d *game, int x, t_ray *r)
 static void	draw_floor_ceiling(t_cube3d *game, int x, t_ray *r)
 {
 	int	y;
+	//cambio
+	if (r->drawStart < 0)
+		r->drawStart = 0;
+	if (r->drawStart > SCREEN_HEIGHT)
+		r->drawStart = SCREEN_HEIGHT;
+
+	// cambio realizado
+	if (r->drawEnd < 0)
+		r->drawEnd = 0;
+	if (r->drawEnd >= SCREEN_HEIGHT)
+		r->drawEnd = SCREEN_HEIGHT - 1;
 
 	y = 0;
 	while (y < r->drawStart)
