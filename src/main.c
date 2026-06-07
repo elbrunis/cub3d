@@ -1,5 +1,13 @@
 #include "../includes/cube3d.h"
 
+static void	print_error(const char *msg)
+{
+	if (errno != 0)
+		printf("Error\n%s: %s\n", msg, strerror(errno));
+	else
+		printf("Error\n%s\n", msg);
+}
+
 static int	game_loop(void *data)
 {
 	t_cube3d	*game;
@@ -18,9 +26,9 @@ static int	game_loop(void *data)
 
 int	main(int argc, char **argv)
 {
-	t_cube3d	*game;
-	t_parse		*parse;
-	const char	*error;
+	t_cube3d		*game;
+	t_parse			*parse;
+	const char		*error;
 
 	if (argc != 2)
 		return (printf("Error\nmissing arguments\n"));
@@ -30,10 +38,7 @@ int	main(int argc, char **argv)
 	error = parser(parse, argv[1]);
 	if (error)
 	{
-		if (errno != 0)
-			printf("Error\n%s: %s\n", error, strerror(errno));
-		else
-			printf("Error\n%s\n", error);
+		print_error(error);
 		free_parse(parse);
 		return (1);
 	}
@@ -48,4 +53,3 @@ int	main(int argc, char **argv)
 	free_game(game);
 	return (0);
 }
-

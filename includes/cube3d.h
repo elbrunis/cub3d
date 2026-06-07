@@ -137,6 +137,9 @@ void		free_parse(t_parse *parse);
 /* utils */
 int			ft_splitlen(char **matrix);
 void		free_split(char **split);
+/* load_game */
+int			load_all_textures(t_cube3d *game, t_parse *parse);
+void		init_player_values(t_cube3d *game, t_parse *parse);
 /* RENDER */
 /* window */
 char		*init_mlx_components(t_cube3d *game);
@@ -146,10 +149,21 @@ void		my_mlx_pixel_put(t_cube3d *game, int x, int y, int color);
 /* key_hooks */
 int			press_key(int keycode, void *data);
 int			release_key(int keycode, void *data);
+/* collision */
+int			is_blocked(t_cube3d *game, double x, double y);
+/* move_walk */
+void		move_front(t_cube3d *game);
+void		move_back(t_cube3d *game);
+void		strafe_left(t_cube3d *game);
+void		strafe_right(t_cube3d *game);
 /* move */
 void		move(t_cube3d *game);
 /* RAYCASTING */
 void		raycasting(t_cube3d *game);
+/* raycaster_draw */
+void		draw_textured_line(t_cube3d *game, int x, t_ray *r);
+void		draw_floor_ceiling(t_cube3d *game, int x, t_ray *r);
+void		calc_tex_x(t_cube3d *game, t_ray *r);
 /* PARSING */
 /* parsing */
 const char	*parser(t_parse *parse, char *path);
@@ -157,8 +171,15 @@ const char	*parser(t_parse *parse, char *path);
 char		*get_extension(t_parse *parse, char **line, char *type);
 /* colors */
 const char	*parse_colors(t_parse *parse, char **line, char type);
+/* read_map_list */
+t_list_map	*ft_lstnew_map(char *line);
+void		ft_lstadd_back_map(t_list_map **lst, t_list_map *new);
+char		**fill_array_and_free(t_list_map *lst, int size);
 /* read_map */
 char		**read_map(t_parse *parse);
+/* parse_map_player */
+char		*handle_player(t_parse *parse, char c, int y, int x);
+char		*check_empty_end(char **map, int y);
 /* parse_map */
 char		*parse_map(t_parse *parse);
 

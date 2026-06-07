@@ -45,10 +45,8 @@ static void	free_textures(t_cube3d *game)
 	}
 }
 
-bool	free_game(t_cube3d *game)
+static void	free_game_resources(t_cube3d *game)
 {
-	if (!game)
-		return (false);
 	if (game->win && game->mlx)
 	{
 		mlx_destroy_window(game->mlx, game->win);
@@ -74,6 +72,13 @@ bool	free_game(t_cube3d *game)
 		free(game->mlx);
 		game->mlx = NULL;
 	}
+}
+
+bool	free_game(t_cube3d *game)
+{
+	if (!game)
+		return (false);
+	free_game_resources(game);
 	free_parse(game->parse);
 	free(game);
 	return (true);
