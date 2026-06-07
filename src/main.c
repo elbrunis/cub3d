@@ -7,8 +7,8 @@ static int	game_loop(void *data)
 	game = (t_cube3d *)data;
 	if (game->close_game)
 	{
-		free_game(game);
-		exit(0);
+		mlx_loop_end(game->mlx);
+		return (0);
 	}
 	move(game);
 	raycasting(game);

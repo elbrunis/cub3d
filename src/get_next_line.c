@@ -1,7 +1,6 @@
 #include "../includes/cube3d.h"
 #include "../includes/libft.h"
 
-
 #define BUFFER_SIZE 42
 
 static char	*free_and_join(char *save, char *read)

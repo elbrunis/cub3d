@@ -1,6 +1,5 @@
 #include "../includes/cube3d.h"
 
-
 static void	free_map_list(t_list_map *lst)
 {
 	t_list_map	*tmp;
@@ -72,9 +71,9 @@ static char	**fill_array_and_free(t_list_map *lst, int size)
 	return (map);
 }
 
-/* falta por arreglar esta funcion para q coja y verifique si las
-ultimas lineas son validas osea pueden tener slatos de lineas
-pero no caracteres sueltos vacios*/
+/* TODO: verify that trailing lines after the map
+   are either empty or whitespace-only;
+   they must not contain stray characters */
 char	**read_map(t_parse *parse)
 {
 	t_list_map	*lst;
@@ -88,6 +87,18 @@ char	**read_map(t_parse *parse)
 	while (line)
 	{
 		tmp = ft_lstnew_map(line);
+		if (!tmp)
+		{
+			free(line);
+			while (lst)
+			{
+				tmp = lst;
+				free(lst->line);
+				lst = lst->next;
+				free(tmp);
+			}
+			return (NULL);
+		}
 		ft_lstadd_back_map(&lst, tmp);
 		count++;
 		line = get_next_line(parse->fd);

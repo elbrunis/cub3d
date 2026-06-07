@@ -18,20 +18,20 @@ static void	draw_textured_line(t_cube3d *game, int x, t_ray *r)
 	int		tex_y;
 	int		color;
 
-	// cambio
-	if (r->perpWallDist < 0.0001)
-        r->perpWallDist = 0.0001;
-	r->lineHeight = (int)(SCREEN_HEIGHT / r->perpWallDist);
-	r->drawStart = (SCREEN_HEIGHT / 2) - (r->lineHeight / 2);
-	r->drawEnd = (SCREEN_HEIGHT / 2) + (r->lineHeight / 2);
-	if (r->drawStart < 0)
-		r->drawStart = 0;
-	if (r->drawEnd >= SCREEN_HEIGHT)
-		r->drawEnd = SCREEN_HEIGHT - 1;
-	step = (double)TEX_HEIGHT / r->lineHeight;
-	tex_pos = (r->drawStart - SCREEN_HEIGHT / 2 + r->lineHeight / 2) * step;
-	y = r->drawStart;
-	while (y <= r->drawEnd)
+	/* adjustment */
+	if (r->perp_wall_dist < 0.0001)
+        r->perp_wall_dist = 0.0001;
+	r->line_height = (int)(SCREEN_HEIGHT / r->perp_wall_dist);
+	r->draw_start = (SCREEN_HEIGHT / 2) - (r->line_height / 2);
+	r->draw_end = (SCREEN_HEIGHT / 2) + (r->line_height / 2);
+	if (r->draw_start < 0)
+		r->draw_start = 0;
+	if (r->draw_end >= SCREEN_HEIGHT)
+		r->draw_end = SCREEN_HEIGHT - 1;
+	step = (double)TEX_HEIGHT / r->line_height;
+	tex_pos = (r->draw_start - SCREEN_HEIGHT / 2 + r->line_height / 2) * step;
+	y = r->draw_start;
+	while (y <= r->draw_end)
 	{
 		tex_y = (int)tex_pos & (TEX_HEIGHT - 1);
 		tex_pos += step;
@@ -46,25 +46,23 @@ static void	draw_textured_line(t_cube3d *game, int x, t_ray *r)
 static void	draw_floor_ceiling(t_cube3d *game, int x, t_ray *r)
 {
 	int	y;
-	//cambio
-	if (r->drawStart < 0)
-		r->drawStart = 0;
-	if (r->drawStart > SCREEN_HEIGHT)
-		r->drawStart = SCREEN_HEIGHT;
 
-	// cambio realizado
-	if (r->drawEnd < 0)
-		r->drawEnd = 0;
-	if (r->drawEnd >= SCREEN_HEIGHT)
-		r->drawEnd = SCREEN_HEIGHT - 1;
+	if (r->draw_start < 0)
+		r->draw_start = 0;
+	if (r->draw_start > SCREEN_HEIGHT)
+		r->draw_start = SCREEN_HEIGHT;
+	if (r->draw_end < 0)
+		r->draw_end = 0;
+	if (r->draw_end >= SCREEN_HEIGHT)
+		r->draw_end = SCREEN_HEIGHT - 1;
 
 	y = 0;
-	while (y < r->drawStart)
+	while (y < r->draw_start)
 	{
 		my_mlx_pixel_put(game, x, y, game->parse->ceiling_color);
 		y++;
 	}
-	y = r->drawEnd + 1;
+	y = r->draw_end + 1;
 	while (y < SCREEN_HEIGHT)
 	{
 		my_mlx_pixel_put(game, x, y, game->parse->floor_color);
@@ -77,14 +75,14 @@ static void	calc_tex_x(t_cube3d *game, t_ray *r)
 	double	wall_x;
 
 	if (r->side == 0)
-		wall_x = game->player->y_pos + r->perpWallDist * r->rayDirY;
+		wall_x = game->player->y_pos + r->perp_wall_dist * r->ray_dir_y;
 	else
-		wall_x = game->player->x_pos + r->perpWallDist * r->rayDirX;
+		wall_x = game->player->x_pos + r->perp_wall_dist * r->ray_dir_x;
 	wall_x -= floor(wall_x);
 	r->tex_x = (int)(wall_x * TEX_WIDTH);
-	if (r->side == 0 && r->rayDirX > 0)
+	if (r->side == 0 && r->ray_dir_x > 0)
 		r->tex_x = TEX_WIDTH - r->tex_x - 1;
-	if (r->side == 1 && r->rayDirY < 0)
+	if (r->side == 1 && r->ray_dir_y < 0)
 		r->tex_x = TEX_WIDTH - r->tex_x - 1;
 }
 
@@ -92,14 +90,14 @@ static void	select_texture(t_cube3d *game, t_ray *r)
 {
 	if (r->side == 0)
 	{
-		if (r->rayDirX > 0)
+		if (r->ray_dir_x > 0)
 			r->tex_num = 2;
 		else
 			r->tex_num = 3;
 	}
 	else
 	{
-		if (r->rayDirY > 0)
+		if (r->ray_dir_y > 0)
 			r->tex_num = 1;
 		else
 			r->tex_num = 0;
@@ -110,42 +108,42 @@ static void	select_texture(t_cube3d *game, t_ray *r)
 static void	init_raycasting(t_cube3d *game, t_ray *r, int x)
 {
 	ft_memset(r, 0, sizeof(t_ray));
-	r->cameraX = (2 * x / (double)SCREEN_WIDTH) - 1;
-	r->rayDirX = game->player->dir_x + (game->player->plane_x * r->cameraX);
-	r->rayDirY = game->player->dir_y + (game->player->plane_y * r->cameraX);
-	r->mapX = (int)game->player->x_pos;
-	r->mapY = (int)game->player->y_pos;
-	if (r->rayDirX == 0)
-		r->deltaDistX = 1e30;
+	r->camera_x = (2 * x / (double)SCREEN_WIDTH) - 1;
+	r->ray_dir_x = game->player->dir_x + (game->player->plane_x * r->camera_x);
+	r->ray_dir_y = game->player->dir_y + (game->player->plane_y * r->camera_x);
+	r->map_x = (int)game->player->x_pos;
+	r->map_y = (int)game->player->y_pos;
+	if (r->ray_dir_x == 0)
+		r->delta_dist_x = 1e30;
 	else
-		r->deltaDistX = fabs(1 / r->rayDirX);
-	if (r->rayDirY == 0)
-		r->deltaDistY = 1e30;
+		r->delta_dist_x = fabs(1 / r->ray_dir_x);
+	if (r->ray_dir_y == 0)
+		r->delta_dist_y = 1e30;
 	else
-		r->deltaDistY = fabs(1 / r->rayDirY);
+		r->delta_dist_y = fabs(1 / r->ray_dir_y);
 }
 
 static void	calculate_step(t_cube3d *game, t_ray *r)
 {
-	if (r->rayDirX < 0)
+	if (r->ray_dir_x < 0)
 	{
-		r->stepX = -1;
-		r->sideDistX = (game->player->x_pos - r->mapX) * r->deltaDistX;
+		r->step_x = -1;
+		r->side_dist_x = (game->player->x_pos - r->map_x) * r->delta_dist_x;
 	}
 	else
 	{
-		r->stepX = 1;
-		r->sideDistX = (r->mapX + 1.0 - game->player->x_pos) * r->deltaDistX;
+		r->step_x = 1;
+		r->side_dist_x = (r->map_x + 1.0 - game->player->x_pos) * r->delta_dist_x;
 	}
-	if (r->rayDirY < 0)
+	if (r->ray_dir_y < 0)
 	{
-		r->stepY = -1;
-		r->sideDistY = (game->player->y_pos - r->mapY) * r->deltaDistY;
+		r->step_y = -1;
+		r->side_dist_y = (game->player->y_pos - r->map_y) * r->delta_dist_y;
 	}
 	else
 	{
-		r->stepY = 1;
-		r->sideDistY = (r->mapY + 1.0 - game->player->y_pos) * r->deltaDistY;
+		r->step_y = 1;
+		r->side_dist_y = (r->map_y + 1.0 - game->player->y_pos) * r->delta_dist_y;
 	}
 }
 
@@ -159,30 +157,30 @@ static void	perform_dda(t_cube3d *game, t_ray *r)
 		map_height++;
 	while (r->hit == 0)
 	{
-		if (r->sideDistX < r->sideDistY)
+		if (r->side_dist_x < r->side_dist_y)
 		{
-			r->sideDistX += r->deltaDistX;
-			r->mapX += r->stepX;
+			r->side_dist_x += r->delta_dist_x;
+			r->map_x += r->step_x;
 			r->side = 0;
 		}
 		else
 		{
-			r->sideDistY += r->deltaDistY;
-			r->mapY += r->stepY;
+			r->side_dist_y += r->delta_dist_y;
+			r->map_y += r->step_y;
 			r->side = 1;
 		}
-		if (r->mapY < 0 || r->mapY >= map_height)
+		if (r->map_y < 0 || r->map_y >= map_height)
 			break ;
-		row_len = (int)ft_strlen(game->map[r->mapY]);
-		if (r->mapX < 0 || r->mapX >= row_len)
+		row_len = (int)ft_strlen(game->map[r->map_y]);
+		if (r->map_x < 0 || r->map_x >= row_len)
 			break ;
-		if (game->map[r->mapY][r->mapX] == '1')
+		if (game->map[r->map_y][r->map_x] == '1')
 			r->hit = 1;
 	}
 	if (r->side == 0)
-		r->perpWallDist = r->sideDistX - r->deltaDistX;
+		r->perp_wall_dist = r->side_dist_x - r->delta_dist_x;
 	else
-		r->perpWallDist = r->sideDistY - r->deltaDistY;
+		r->perp_wall_dist = r->side_dist_y - r->delta_dist_y;
 }
 
 void	raycasting(t_cube3d *game)

@@ -16,6 +16,19 @@ static int	is_wall(t_cube3d *game, double x, double y)
 	return (0);
 }
 
+static int	is_blocked(t_cube3d *game, double x, double y)
+{
+	if (is_wall(game, x - COLLISION_MARGIN, y - COLLISION_MARGIN))
+		return (1);
+	if (is_wall(game, x + COLLISION_MARGIN, y - COLLISION_MARGIN))
+		return (1);
+	if (is_wall(game, x - COLLISION_MARGIN, y + COLLISION_MARGIN))
+		return (1);
+	if (is_wall(game, x + COLLISION_MARGIN, y + COLLISION_MARGIN))
+		return (1);
+	return (0);
+}
+
 static void	move_front(t_cube3d *game)
 {
 	t_player	*p;
@@ -25,9 +38,9 @@ static void	move_front(t_cube3d *game)
 	p = game->player;
 	new_x = p->x_pos + (p->dir_x * SPEED);
 	new_y = p->y_pos + (p->dir_y * SPEED);
-	if (!is_wall(game, new_x, p->y_pos))
+	if (!is_blocked(game, new_x, p->y_pos))
 		p->x_pos = new_x;
-	if (!is_wall(game, p->x_pos, new_y))
+	if (!is_blocked(game, p->x_pos, new_y))
 		p->y_pos = new_y;
 }
 
@@ -40,9 +53,9 @@ static void	move_back(t_cube3d *game)
 	p = game->player;
 	new_x = p->x_pos - (p->dir_x * SPEED);
 	new_y = p->y_pos - (p->dir_y * SPEED);
-	if (!is_wall(game, new_x, p->y_pos))
+	if (!is_blocked(game, new_x, p->y_pos))
 		p->x_pos = new_x;
-	if (!is_wall(game, p->x_pos, new_y))
+	if (!is_blocked(game, p->x_pos, new_y))
 		p->y_pos = new_y;
 }
 
@@ -55,9 +68,9 @@ static void	strafe_left(t_cube3d *game)
 	p = game->player;
 	new_x = p->x_pos - (p->dir_y * SPEED);
 	new_y = p->y_pos + (p->dir_x * SPEED);
-	if (!is_wall(game, new_x, p->y_pos))
+	if (!is_blocked(game, new_x, p->y_pos))
 		p->x_pos = new_x;
-	if (!is_wall(game, p->x_pos, new_y))
+	if (!is_blocked(game, p->x_pos, new_y))
 		p->y_pos = new_y;
 }
 
@@ -70,9 +83,9 @@ static void	strafe_right(t_cube3d *game)
 	p = game->player;
 	new_x = p->x_pos + (p->dir_y * SPEED);
 	new_y = p->y_pos - (p->dir_x * SPEED);
-	if (!is_wall(game, new_x, p->y_pos))
+	if (!is_blocked(game, new_x, p->y_pos))
 		p->x_pos = new_x;
-	if (!is_wall(game, p->x_pos, new_y))
+	if (!is_blocked(game, p->x_pos, new_y))
 		p->y_pos = new_y;
 }
 

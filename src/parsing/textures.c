@@ -52,7 +52,11 @@ char	*get_extension(t_parse *parse, char **line, char *type)
 		return (error);
 	split = ft_split((*line) + 2);
 	if (!split || !split[0])
+	{
+		if (split)
+			free_split(split);
 		return ("split error");
+	}
 	error = check_texture(split);
 	if (error)
 	{
@@ -67,5 +71,6 @@ char	*get_extension(t_parse *parse, char **line, char *type)
 	}
 	while (*(*line) && *(*line) != ' ' && *(*line) != '\t' && *(*line) != '\n')
 		(*line)++;
+	free_split(split);
 	return (NULL);
 }

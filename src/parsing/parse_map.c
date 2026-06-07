@@ -34,18 +34,12 @@ static char	*check_cell(char **map, int y, int x)
 		return ("Map is not closed");
 	if (map[y][x - 1] == ' ')
 		return ("Map is not closed");
-	if (y > 0)
-	{
-		up_len = (int)ft_strlen(map[y - 1]);
-		if (x < up_len && map[y - 1][x] == ' ')
-			return ("Map is not closed");
-	}
-	if (map[y + 1])
-	{
-		down_len = (int)ft_strlen(map[y + 1]);
-		if (x < down_len && map[y + 1][x] == ' ')
-			return ("Map is not closed");
-	}
+	up_len = (int)ft_strlen(map[y - 1]);
+	if (x >= up_len || map[y - 1][x] == ' ')
+		return ("Map is not closed");
+	down_len = (int)ft_strlen(map[y + 1]);
+	if (x >= down_len || map[y + 1][x] == ' ')
+		return ("Map is not closed");
 	return (NULL);
 }
 

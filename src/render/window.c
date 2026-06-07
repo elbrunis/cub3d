@@ -13,7 +13,9 @@ void	my_mlx_pixel_put(t_cube3d *game, int x, int y, int color)
 
 int		x_pres(void *data)
 {
-	t_cube3d *game = (t_cube3d *)data;
+	t_cube3d	*game;
+
+	game = (t_cube3d *)data;
 	game->close_game = true;
 	return (0);
 }

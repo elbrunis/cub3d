@@ -20,15 +20,16 @@
 # define N_MAP_CONFIG 6
 
 # define K_W 119
-# define K_A 100
+# define K_A 97
 # define K_S 115
-# define K_D 97
+# define K_D 100
 # define K_ESC 65307
 # define K_LEFT 65361
 # define K_RIGHT 65363
 
-# define SPEED 0.09
-# define MOVE_ANGLE 0.09
+# define SPEED 0.009
+# define MOVE_ANGLE 0.009
+# define COLLISION_MARGIN 0.1
 
 typedef struct s_list_map
 {
@@ -66,23 +67,23 @@ typedef struct s_tex
 
 typedef struct	s_ray
 {
-	double	cameraX;
-	double	rayDirX;
-	double	rayDirY;
-	int		mapX;
-	int		mapY;
-	double	deltaDistX;
-	double	deltaDistY;
-	double	sideDistX;
-	double	sideDistY;
-	int		stepX;
-	int		stepY;
+	double	camera_x;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	int		map_x;
+	int		map_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	int		step_x;
+	int		step_y;
 	int		hit;
 	int		side;
-	double	perpWallDist;
-	int		lineHeight;
-	int		drawStart;
-	int		drawEnd;
+	double	perp_wall_dist;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
 	int		tex_num;
 	int		tex_x;
 }				t_ray;

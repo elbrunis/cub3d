@@ -168,6 +168,7 @@ static char	*get_word(const char *s, int start, int end)
 	word[i] = '\0';
 	return (word);
 }
+
 char	**ft_split(const char *s)
 {
 	char	**res;
