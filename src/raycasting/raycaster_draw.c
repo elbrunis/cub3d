@@ -89,20 +89,7 @@ void	calc_tex_x(t_cube3d *game, t_ray *r)
 {
 	double	wall_x;
 
-	if (r->side == 0)
-	{
-		if (r->ray_dir_x > 0)
-			r->tex_num = 2;
-		else
-			r->tex_num = 3;
-	}
-	else
-	{
-		if (r->ray_dir_y > 0)
-			r->tex_num = 1;
-		else
-			r->tex_num = 0;
-	}
+	set_tex_num(r);
 	if (r->side == 0)
 		wall_x = game->player->y_pos + r->perp_wall_dist * r->ray_dir_y;
 	else

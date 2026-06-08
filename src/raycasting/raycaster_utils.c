@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_map.c                                         :+:      :+:    :+:   */
+/*   raycaster_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: runo <runo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,43 +10,34 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cube3d.h"
+#include "../../includes/cube3d.h"
 
-static void	free_map_list(t_list_map *lst)
+int	is_out_of_bounds(t_cube3d *game, t_ray *r, int map_height)
 {
-	t_list_map	*tmp;
+	int	row_len;
 
-	while (lst)
-	{
-		tmp = lst;
-		free(lst->line);
-		lst = lst->next;
-		free(tmp);
-	}
+	if (r->map_y < 0 || r->map_y >= map_height)
+		return (1);
+	row_len = (int)ft_strlen(game->map[r->map_y]);
+	if (r->map_x < 0 || r->map_x >= row_len)
+		return (1);
+	return (0);
 }
 
-char	**read_map(t_parse *parse)
+void	set_tex_num(t_ray *r)
 {
-	t_list_map	*lst;
-	t_list_map	*tmp;
-	char		*line;
-	int			count;
-
-	lst = NULL;
-	count = 0;
-	line = get_next_line(parse->fd);
-	while (line)
+	if (r->side == 0)
 	{
-		tmp = ft_lstnew_map(line);
-		if (!tmp)
-		{
-			free(line);
-			free_map_list(lst);
-			return (NULL);
-		}
-		ft_lstadd_back_map(&lst, tmp);
-		count++;
-		line = get_next_line(parse->fd);
+		if (r->ray_dir_x > 0)
+			r->tex_num = 2;
+		else
+			r->tex_num = 3;
 	}
-	return (fill_array_and_free(lst, count));
+	else
+	{
+		if (r->ray_dir_y > 0)
+			r->tex_num = 1;
+		else
+			r->tex_num = 0;
+	}
 }

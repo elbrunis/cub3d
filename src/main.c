@@ -36,6 +36,14 @@ static int	game_loop(void *data)
 	return (0);
 }
 
+static void	setup_mlx_hooks(t_cube3d *game)
+{
+	mlx_hook(game->win, 2, 1L << 0, press_key, (void *)game);
+	mlx_hook(game->win, 3, 1L << 1, release_key, (void *)game);
+	mlx_hook(game->win, 17, 0, x_pres, (void *)game);
+	mlx_loop_hook(game->mlx, game_loop, (void *)game);
+}
+
 int	main(int argc, char **argv)
 {
 	t_cube3d		*game;
@@ -57,10 +65,7 @@ int	main(int argc, char **argv)
 	game = init_game(parse);
 	if (!game)
 		return (1);
-	mlx_hook(game->win, 2, 1L << 0, press_key, (void *)game);
-	mlx_hook(game->win, 3, 1L << 1, release_key, (void *)game);
-	mlx_hook(game->win, 17, 0, x_pres, (void *)game);
-	mlx_loop_hook(game->mlx, game_loop, (void *)game);
+	setup_mlx_hooks(game);
 	mlx_loop(game->mlx);
 	free_game(game);
 	return (0);

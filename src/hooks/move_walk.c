@@ -42,7 +42,7 @@ void	move_back(t_cube3d *game)
 		p->y_pos = new_y;
 }
 
-void	strafe_left(t_cube3d *game)
+void	strafe_right(t_cube3d *game)
 {
 	t_player	*p;
 	double		new_x;
@@ -57,7 +57,7 @@ void	strafe_left(t_cube3d *game)
 		p->y_pos = new_y;
 }
 
-void	strafe_right(t_cube3d *game)
+void	strafe_left(t_cube3d *game)
 {
 	t_player	*p;
 	double		new_x;

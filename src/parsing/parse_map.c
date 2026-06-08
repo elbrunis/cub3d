@@ -68,6 +68,23 @@ static int	skip_empty_lines(char **map)
 	return (y);
 }
 
+static char	*check_map_lines(t_parse *parse, char **map, int *y)
+{
+	char	*err;
+
+	while (map[*y] && map[*y][0] != '\0')
+	{
+		err = check_line(parse, map, *y);
+		if (err)
+		{
+			free_map(map);
+			return (err);
+		}
+		(*y)++;
+	}
+	return (NULL);
+}
+
 char	*parse_map(t_parse *parse)
 {
 	char	**map;
@@ -78,16 +95,9 @@ char	*parse_map(t_parse *parse)
 	if (!map || !map[0])
 		return ("Empty map");
 	y = skip_empty_lines(map);
-	while (map[y] && map[y][0] != '\0')
-	{
-		err = check_line(parse, map, y);
-		if (err)
-		{
-			free_map(map);
-			return (err);
-		}
-		y++;
-	}
+	err = check_map_lines(parse, map, &y);
+	if (err)
+		return (err);
 	err = check_empty_end(map, y);
 	if (err)
 	{

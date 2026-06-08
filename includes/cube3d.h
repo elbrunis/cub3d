@@ -137,6 +137,7 @@ void		free_parse(t_parse *parse);
 /* utils */
 int			ft_splitlen(char **matrix);
 void		free_split(char **split);
+void		frees_split(char **res, int i);
 /* load_game */
 int			load_all_textures(t_cube3d *game, t_parse *parse);
 void		init_player_values(t_cube3d *game, t_parse *parse);
@@ -160,6 +161,9 @@ void		strafe_right(t_cube3d *game);
 void		move(t_cube3d *game);
 /* RAYCASTING */
 void		raycasting(t_cube3d *game);
+/* raycaster_utils */
+int			is_out_of_bounds(t_cube3d *game, t_ray *r, int map_height);
+void		set_tex_num(t_ray *r);
 /* raycaster_draw */
 void		draw_textured_line(t_cube3d *game, int x, t_ray *r);
 void		draw_floor_ceiling(t_cube3d *game, int x, t_ray *r);

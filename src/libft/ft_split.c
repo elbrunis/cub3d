@@ -39,16 +39,6 @@ static int	word_count(const char *s)
 	return (count);
 }
 
-static void	frees_split(char **res, int i)
-{
-	while (i >= 0)
-	{
-		free(res[i]);
-		i--;
-	}
-	free(res);
-}
-
 static char	*get_word(const char *s, int start, int end)
 {
 	char	*word;
@@ -64,18 +54,12 @@ static char	*get_word(const char *s, int start, int end)
 	return (word);
 }
 
-char	**ft_split(const char *s)
+static char	**fill_split_words(char **res, const char *s)
 {
-	char	**res;
 	int		i;
 	int		j;
 	int		start;
 
-	if (!s)
-		return (NULL);
-	res = malloc(sizeof(char *) * (word_count(s) + 1));
-	if (!res)
-		return (NULL);
 	i = 0;
 	j = 0;
 	while (s[i])
@@ -95,4 +79,16 @@ char	**ft_split(const char *s)
 	}
 	res[j] = NULL;
 	return (res);
+}
+
+char	**ft_split(const char *s)
+{
+	char	**res;
+
+	if (!s)
+		return (NULL);
+	res = malloc(sizeof(char *) * (word_count(s) + 1));
+	if (!res)
+		return (NULL);
+	return (fill_split_words(res, s));
 }

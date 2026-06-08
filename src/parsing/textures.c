@@ -53,37 +53,39 @@ static char	*check_texture(char **split)
 	return (NULL);
 }
 
+static char	*validate_and_save_texture(t_parse *parse, char *type,
+			char **split)
+{
+	int		len;
+	char	*error;
+
+	len = ft_strlen(split[0]);
+	if (len < 5 || split[0][len - 1] != 'm' || split[0][len - 2] != 'p'
+		|| split[0][len - 3] != 'x' || split[0][len - 4] != '.')
+		return ("Invalid texture extension");
+	error = save_extension(parse, type, split[0]);
+	if (error)
+		return (error);
+	return (NULL);
+}
+
 char	*get_extension(t_parse *parse, char **line, char *type)
 {
 	char	**split;
 	char	*error;
-	int		len;
 
-	(void)parse;
 	error = check_line_format((*line));
 	if (error)
 		return (error);
 	split = ft_split((*line) + 2);
 	if (!split || !split[0])
 	{
-		if (split)
-			free_split(split);
+		free_split(split);
 		return ("split error");
 	}
 	error = check_texture(split);
-	if (error)
-	{
-		free_split(split);
-		return (error);
-	}
-	len = ft_strlen(split[0]);
-	if (len < 5 || split[0][len - 1] != 'm' || split[0][len - 2] != 'p'
-		|| split[0][len - 3] != 'x' || split[0][len - 4] != '.')
-	{
-		free_split(split);
-		return ("Invalid texture extension");
-	}
-	error = save_extension(parse, type, split[0]);
+	if (!error)
+		error = validate_and_save_texture(parse, type, split);
 	if (error)
 	{
 		free_split(split);

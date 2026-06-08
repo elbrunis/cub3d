@@ -56,25 +56,8 @@ static void	calculate_step(t_cube3d *game, t_ray *r)
 	}
 }
 
-static int	is_out_of_bounds(t_cube3d *game, t_ray *r, int map_height)
+static void	run_dda_loop(t_cube3d *game, t_ray *r, int map_height)
 {
-	int	row_len;
-
-	if (r->map_y < 0 || r->map_y >= map_height)
-		return (1);
-	row_len = (int)ft_strlen(game->map[r->map_y]);
-	if (r->map_x < 0 || r->map_x >= row_len)
-		return (1);
-	return (0);
-}
-
-static void	perform_dda(t_cube3d *game, t_ray *r)
-{
-	int	map_height;
-
-	map_height = 0;
-	while (game->map[map_height])
-		map_height++;
 	while (r->hit == 0)
 	{
 		if (r->side_dist_x < r->side_dist_y)
@@ -94,6 +77,16 @@ static void	perform_dda(t_cube3d *game, t_ray *r)
 		if (game->map[r->map_y][r->map_x] == '1')
 			r->hit = 1;
 	}
+}
+
+static void	perform_dda(t_cube3d *game, t_ray *r)
+{
+	int	map_height;
+
+	map_height = 0;
+	while (game->map[map_height])
+		map_height++;
+	run_dda_loop(game, r, map_height);
 	if (r->side == 0)
 		r->perp_wall_dist = r->side_dist_x - r->delta_dist_x;
 	else

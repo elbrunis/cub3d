@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_map.c                                         :+:      :+:    :+:   */
+/*   ft_split_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: runo <runo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,43 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cube3d.h"
+#include "../../includes/cube3d.h"
 
-static void	free_map_list(t_list_map *lst)
+void	frees_split(char **res, int i)
 {
-	t_list_map	*tmp;
-
-	while (lst)
+	while (i >= 0)
 	{
-		tmp = lst;
-		free(lst->line);
-		lst = lst->next;
-		free(tmp);
+		free(res[i]);
+		i--;
 	}
-}
-
-char	**read_map(t_parse *parse)
-{
-	t_list_map	*lst;
-	t_list_map	*tmp;
-	char		*line;
-	int			count;
-
-	lst = NULL;
-	count = 0;
-	line = get_next_line(parse->fd);
-	while (line)
-	{
-		tmp = ft_lstnew_map(line);
-		if (!tmp)
-		{
-			free(line);
-			free_map_list(lst);
-			return (NULL);
-		}
-		ft_lstadd_back_map(&lst, tmp);
-		count++;
-		line = get_next_line(parse->fd);
-	}
-	return (fill_array_and_free(lst, count));
+	free(res);
 }
