@@ -51,10 +51,10 @@ static int	get_color(char **line)
 	}
 	str[j] = '\0';
 	num = ft_atoi(str);
-	if (num < 0 || num > 255) 
+	if (num < 0 || num > 255)
 		return (-1);
 	line[0] += i;
-	return(num);
+	return (num);
 }
 
 const char	*parse_colors(t_parse *parse, char **line, char type)
@@ -63,10 +63,10 @@ const char	*parse_colors(t_parse *parse, char **line, char type)
 	int	i;
 
 	if ((*line)[1] != ' ' || !ft_isdigit((*line)[2]))
-		return("Invalid character in the map's color values");
+		return ("Invalid character in the map's color values");
 	(*line) += 2;
 	i = 0;
-	while(i < 3)
+	while (i < 3)
 	{
 		rgb[i] = get_color(line);
 		if (rgb[i] < 0)
@@ -81,8 +81,7 @@ const char	*parse_colors(t_parse *parse, char **line, char type)
 	}
 	while (**line == ' ' || **line == '\t')
 		(*line)++;
-
 	if (**line != '\0' && **line != '\n')
 		return ("Invalid characters after color values");
-	return(rgb_to_int(parse, rgb, type));
+	return (rgb_to_int(parse, rgb, type));
 }

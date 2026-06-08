@@ -14,7 +14,7 @@
 
 static char	*get_extension_type(char *line)
 {
-	int len;
+	int	len;
 
 	len = ft_strlen(line);
 	if (!line || len < 2)
@@ -74,13 +74,13 @@ const char	*validate_file(t_parse *parse, char *path)
 	int	len;
 
 	len = (int)ft_strlen(path);
-	if (len < 5 || (path[len - 1] != 'b' || path[len - 2] != 'u' 
+	if (len < 5 || (path[len - 1] != 'b' || path[len - 2] != 'u'
 			|| path[len - 3] != 'c' || path[len - 4] != '.'))
 		return ("Invalid extension");
 	parse->fd = open(path, O_RDONLY);
-	if(parse->fd < 0)
+	if (parse->fd < 0)
 		return ("The file could not be opened correctly");
-	return(NULL);
+	return (NULL);
 }
 
 const char	*parser(t_parse *parse, char *path)
@@ -88,13 +88,13 @@ const char	*parser(t_parse *parse, char *path)
 	const char	*error;
 
 	error = validate_file(parse, path);
-	if(error)
-		return(error);
+	if (error)
+		return (error);
 	error = read_and_check_map(parse);
-	if(error)
+	if (error)
 	{
 		close(parse->fd);
-		return(error);
+		return (error);
 	}
 	if (parse->n_config < N_MAP_CONFIG)
 	{
@@ -103,7 +103,7 @@ const char	*parser(t_parse *parse, char *path)
 	}
 	error = parse_map(parse);
 	close(parse->fd);
-	if(error)
-		return(error);
+	if (error)
+		return (error);
 	return (NULL);
 }

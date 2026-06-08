@@ -18,12 +18,12 @@ void	my_mlx_pixel_put(t_cube3d *game, int x, int y, int color)
 
 	if (x < 0 || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_HEIGHT)
 		return ;
-	dst = game->frame->addr + (y * game->frame->line_length + x * \
-		(game->frame->bits_per_pixel / 8));
+	dst = game->frame->addr + (y * game->frame->line_length
+			+ x * (game->frame->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
 
-int		x_pres(void *data)
+int	x_pres(void *data)
 {
 	t_cube3d	*game;
 

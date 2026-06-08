@@ -40,7 +40,8 @@ static void	calculate_step(t_cube3d *game, t_ray *r)
 	else
 	{
 		r->step_x = 1;
-		r->side_dist_x = (r->map_x + 1.0 - game->player->x_pos) * r->delta_dist_x;
+		r->side_dist_x = (r->map_x + 1.0
+				- game->player->x_pos) * r->delta_dist_x;
 	}
 	if (r->ray_dir_y < 0)
 	{
@@ -50,7 +51,8 @@ static void	calculate_step(t_cube3d *game, t_ray *r)
 	else
 	{
 		r->step_y = 1;
-		r->side_dist_y = (r->map_y + 1.0 - game->player->y_pos) * r->delta_dist_y;
+		r->side_dist_y = (r->map_y + 1.0
+				- game->player->y_pos) * r->delta_dist_y;
 	}
 }
 
