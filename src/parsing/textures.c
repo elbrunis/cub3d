@@ -6,7 +6,7 @@
 /*   By: runo <runo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/08 18:36:23 by runo              #+#    #+#             */
-/*   Updated: 2026/06/08 18:36:23 by runo             ###   ########.fr       */
+/*   Updated: 2026/06/08 19:00:35 by runo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char	*get_extension(t_parse *parse, char **line, char *type)
 {
 	char	**split;
 	char	*error;
+	int		len;
 
 	(void)parse;
 	error = check_line_format((*line));
@@ -74,6 +75,13 @@ char	*get_extension(t_parse *parse, char **line, char *type)
 	{
 		free_split(split);
 		return (error);
+	}
+	len = ft_strlen(split[0]);
+	if (len < 5 || split[0][len - 1] != 'm' || split[0][len - 2] != 'p'
+		|| split[0][len - 3] != 'x' || split[0][len - 4] != '.')
+	{
+		free_split(split);
+		return ("Invalid texture extension");
 	}
 	error = save_extension(parse, type, split[0]);
 	if (error)
