@@ -29,6 +29,7 @@ static char	*get_extension_type(char *line)
 		return ("EA");
 	return (NULL);
 }
+
 static const char	*parse_line(t_parse *parse, char *temp)
 {
 	char	*type;

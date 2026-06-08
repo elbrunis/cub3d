@@ -32,7 +32,6 @@ int		x_pres(void *data)
 	return (0);
 }
 
-
 char	*init_mlx_components(t_cube3d *game)
 {
 	game->mlx = mlx_init();

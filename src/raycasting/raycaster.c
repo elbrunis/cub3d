@@ -12,10 +12,6 @@
 
 #include "../../includes/cube3d.h"
 
-void	draw_textured_line(t_cube3d *game, int x, t_ray *r);
-void	draw_floor_ceiling(t_cube3d *game, int x, t_ray *r);
-void	calc_tex_x(t_cube3d *game, t_ray *r);
-
 static void	init_raycasting(t_cube3d *game, t_ray *r, int x)
 {
 	ft_memset(r, 0, sizeof(t_ray));

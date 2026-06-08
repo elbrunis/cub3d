@@ -12,9 +12,6 @@
 
 #include "../../includes/cube3d.h"
 
-int	load_all_textures(t_cube3d *game, t_parse *parse);
-void	init_player_values(t_cube3d *game, t_parse *parse);
-
 static int	allocate_game_components(t_cube3d *game)
 {
 	game->player = (t_player *)malloc(sizeof(t_player));

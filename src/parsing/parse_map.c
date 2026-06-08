@@ -12,9 +12,6 @@
 
 #include "../includes/cube3d.h"
 
-char	*handle_player(t_parse *parse, char c, int y, int x);
-char	*check_empty_end(char **map, int y);
-
 static char	*check_cell(char **map, int y, int x)
 {
 	int	len;
